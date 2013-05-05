@@ -188,7 +188,7 @@
         NSString *numRevues = [NSString stringWithFormat:@"%d Reviews",[self.placeDetail.reviews count]];
         self.lReviewsNum.text = numRevues;
     } else {
-        self.lReviewsNum.text = @"No Reviews";
+        self.lReviewsNum.text = [NSString stringWithFormat:@"No Reviews"];
     }
     self.iPhoto.image = self.place.iPhoto;
     self.iRating.image = self.place.iRating;

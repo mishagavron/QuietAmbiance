@@ -11,6 +11,7 @@
 #import "Utils.h"
 #import "Place.h"
 #import "ResultCell.h"
+#import "UserPreferences.h"
 #import "AFHTTPRequestOperation.h"
 #import "AFJSONRequestOperation.h"
 #import "AFHTTPClient.h"
@@ -97,7 +98,8 @@
     NSString *radius = [Utils getSearchRadius];
     NSString *type = [Utils getSearchType];
     
-    NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?types=%@&name=&location=%@,%@&radius=%@&sensor=false&key=%@",type,lat,longt,radius,gKey];
+    NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?opennow&types=%@&name=&location=%@,%@&radius=%@&sensor=false&key=%@",type,lat,longt,radius,gKey];
+    placeString = [UserPreferences personilizeGoogleAPIURLString:placeString];
     NSLog(@"request string: %@",placeString);
     
     NSURL *placeURL = [NSURL URLWithString:placeString];
