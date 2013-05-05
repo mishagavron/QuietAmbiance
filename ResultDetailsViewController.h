@@ -36,6 +36,7 @@
 
 @property (strong) Place* place;
 @property (strong) PlaceDetails* placeDetail;
+@property CGFloat viewTotalHeight;
 
 - (IBAction)mapItSelected:(id)sender;
 - (IBAction)callItSelected:(id)sender;

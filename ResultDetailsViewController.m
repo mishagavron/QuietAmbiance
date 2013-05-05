@@ -7,6 +7,8 @@
 //
 
 #import <MapKit/MapKit.h>
+#import <QuartzCore/QuartzCore.h>
+
 #import "ResultDetailsViewController.h"
 #import "AppDelegate.h"
 #import "Utils.h"
@@ -17,13 +19,18 @@
 #include "AFImageRequestOperation.h"
 #include "ReviewCell.h"
 
+#define FONT_SIZE 14.0f
+#define CELL_CONTENT_WIDTH 320.0f
+#define CELL_CONTENT_MARGIN 5.0f
+
+
 @interface ResultDetailsViewController ()
 
 @end
 
 @implementation ResultDetailsViewController
 
-@synthesize place,placeDetail;
+@synthesize place,placeDetail,viewTotalHeight;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -71,10 +78,13 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
 }
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
+    self.viewTotalHeight = 0.0f;
     [self.tableView registerNib:[UINib nibWithNibName:@"ReviewCell" bundle:nil] forCellReuseIdentifier:@"ReviewCell"];
     
     //load Nearby places content
@@ -159,8 +169,8 @@
         self.placeDetail.phone = phone;
         self.placeDetail.address =  address;
         
-        //adjust scroll view based on a number of reviews
- 
+        //adjust table view based on a number of reviews
+        self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y,self.tableView.frame.size.width, 1500.0f);
     }
     
     //NSLog(@"Reviews count after sort: %lu",(unsigned long)[self.placeDetail.reviews count]);
@@ -182,13 +192,9 @@
     }
     self.iPhoto.image = self.place.iPhoto;
     self.iRating.image = self.place.iRating;
-    //self.tableView.contentSize = CGSizeMake(320,325 + 125*[self.placeDetail.reviews count]);
-    
-    self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y,self.tableView.frame.size.width,325 + 125*[self.placeDetail.reviews count]);
 
-    self.scrollView.contentSize=CGSizeMake(320,325 + 125*[self.placeDetail.reviews count]);
-    [self.scrollView setContentSize:(CGSizeMake(320, 325 + 125*[self.placeDetail.reviews count]))];
  }
+
 
 #pragma mark - Table view data source
 
@@ -223,10 +229,44 @@
     return ret;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    return 125.;
+    CGFloat height = [Utils getReviewHeaderMarginHeight] + 20.0f;
+    if ([self.placeDetail.reviews count] > 0) {
+        
+        Review *review = [self.placeDetail.reviews objectAtIndex:(long)indexPath.row];
+        
+        NSString *text = review.text;
+        CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+    
+        CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    
+        height = MAX(size.height, [Utils getReviewHeaderMarginHeight] + 20.0f);
+    
+        height = height + (CELL_CONTENT_MARGIN * 2);
+        
+        height = height + [Utils getReviewHeaderMarginHeight];
+        
+        self.viewTotalHeight += height;
+        
+        
+        if (indexPath.row == ([self.placeDetail.reviews count] - 1)) {
+            
+            self.viewTotalHeight += [Utils getReviewTableVerticalOffset];
+            //NSLog(@"indexPath.row = %u", indexPath.row);
+            //NSLog(@"reviews count - 1 = %u", [self.placeDetail.reviews count] - 1);
+            //NSLog(@"total height = %f",self.viewTotalHeight);
+            
+            self.scrollView.contentSize=CGSizeMake(320,self.viewTotalHeight);
+
+        }
+
+    }
+    
+    
+     return height;
 }
+
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -244,7 +284,27 @@
         Review *review = [self.placeDetail.reviews objectAtIndex:(long)indexPath.row];
         cell.authorName.text = review.author;
         cell.reviewTime.text = [formatter stringFromDate:review.time];
-        cell.reviewText.text = [Utils convertEscapeTexttoPlainText:review.text];
+      
+        [cell.reviewText setLineBreakMode:NSLineBreakByWordWrapping];
+        [cell.reviewText setMinimumFontSize:FONT_SIZE];
+        [cell.reviewText setNumberOfLines:0];
+        [cell.reviewText setFont:[UIFont systemFontOfSize:FONT_SIZE]];
+        [cell.reviewText setTag:1];
+        
+        cell.reviewText.layer.borderColor = [UIColor grayColor].CGColor;
+        cell.reviewText.layer.borderWidth = 1.0;
+        
+        
+        NSString *text = [Utils convertEscapeTexttoPlainText:review.text];
+        
+        CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+        
+        CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+        
+
+        [cell.reviewText setFrame:CGRectMake(CELL_CONTENT_MARGIN, CELL_CONTENT_MARGIN + [Utils getReviewHeaderMarginHeight], CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), MAX(size.height, 44.0f))];
+        
+        [cell.reviewText setText:text];
         
         UIImage *noAuthorPic = [UIImage imageNamed:@"no_author_pic.png"];
         review.authorPic = noAuthorPic;

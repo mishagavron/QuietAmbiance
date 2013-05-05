@@ -12,7 +12,7 @@
 
 @property (weak)IBOutlet UILabel *authorName;
 @property (weak)IBOutlet UILabel *reviewTime;
-@property (weak)IBOutlet UITextView *reviewText;
+@property (weak)IBOutlet UILabel *reviewText;
 @property (weak)IBOutlet UIImageView *authorPic;
 
 @end

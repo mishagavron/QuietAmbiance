@@ -33,6 +33,16 @@ static NSString *googleKey = @"AIzaSyC3G9bERz7ktJkqxvnnRx_Sb9ld8jKQErk";
     return @"500";
 }
 
++(CGFloat) getReviewHeaderMarginHeight {
+    // if you change ReviewCell.xib for where review Y coordinate text starts, change it here as well
+    return 30.0f;
+}
+
++(CGFloat) getReviewTableVerticalOffset {
+    // if you change ReviewDetailsViewController.xib for where review table Y coordinate starts, change it here as well
+    return 325.0f;
+}
+
 + (NSString *)addressComponent:(NSString *)component inAddressArray:(NSArray *)array ofType:(NSString *)type{
 	int index = [array indexOfObjectPassingTest:^(id obj, NSUInteger idx, BOOL *stop){
         return [(NSString *)([[obj objectForKey:@"types"] objectAtIndex:0]) isEqualToString:component];

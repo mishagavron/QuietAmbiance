@@ -26,5 +26,7 @@
 + (NSString *)getKey;
 + (NSString *)getSearchType;
 + (NSString *)getSearchRadius;
++ (CGFloat) getReviewHeaderMarginHeight;
++ (CGFloat) getReviewTableVerticalOffset;
 
 @end
