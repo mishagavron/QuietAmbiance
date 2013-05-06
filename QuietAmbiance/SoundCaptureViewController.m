@@ -333,9 +333,17 @@
   		[recorder prepareToRecord];
   		recorder.meteringEnabled = YES;
   		[recorder record];
+        
+        spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        
+        //spinner.frame = CGRectMake(1000, 1000, 240, 240);
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        cell.accessoryView = spinner;
+        [spinner startAnimating];
+        
         levelTimer = [NSTimer scheduledTimerWithTimeInterval: 0.03 target: self selector: @selector(levelTimerCallback:) userInfo: nil repeats: YES];
         
-        [NSTimer scheduledTimerWithTimeInterval:10 target: self selector: @selector(stopSampling:) userInfo:p.place_id repeats: NO];
+        [NSTimer scheduledTimerWithTimeInterval:5 target: self selector: @selector(stopSampling:) userInfo:p.place_id repeats: NO];
         
   	} else
   		NSLog([error description]);
@@ -387,6 +395,8 @@
     
     //call start on your request operation
     [operation start];
+    
+    [spinner stopAnimating];
     
 }
 

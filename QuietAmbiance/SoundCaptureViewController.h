@@ -14,6 +14,8 @@
     AVAudioRecorder *recorder;
     NSTimer *levelTimer;
     double avgSound;
+    
+    UIActivityIndicatorView *spinner;
 }
 
 - (void)levelTimerCallback:(NSTimer *)timer;
