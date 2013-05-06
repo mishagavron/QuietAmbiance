@@ -18,12 +18,60 @@
 
 @implementation AppDelegate
 
-@synthesize locationManager=_locationManager;
+@synthesize locationManager=_locationManager, places;
 
+-(void) loadLocaleFromAPI:(CLLocation *)location {
+    
+    NSString *lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+    NSString *longt = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+    //NSString *gKey = @"AIzaSyC3G9bERz7ktJkqxvnnRx_Sb9ld8jKQErk";
+    //NSString *radius = @"100";
+    //NSString *pipe = @"|";
+    //NSString *e_pipe = [pipe stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //NSString *type =@"restaurant";
+    //type = [type stringByAppendingString:e_pipe];
+    //type = [type stringByAppendingString:@"bar"];
+    NSString *placeString  = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?latlng=%@,%@&sensor=true",lat,longt];
+    NSLog(@"request string: %@",placeString);
+    
+    NSURL *placeURL = [NSURL URLWithString:placeString];
+    NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:placeURL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5.0];
+    [request setHTTPMethod:@"GET"];
+    NSURLResponse* response;
+    NSError* error = nil;
+    
+    //Capturing server response
+    NSData* result = [NSURLConnection sendSynchronousRequest:request  returningResponse:&response       error:&error];
+    NSError *myError = nil;
+    NSDictionary *res = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&myError];
+    
+    
+    NSArray *firstResultAddress = [[[res objectForKey:@"results"] objectAtIndex:0] objectForKey:@"address_components"];
+    
+    
+    NSString *countryName = [Utils addressComponent:@"country" inAddressArray:firstResultAddress ofType:@"short_name"];
+    NSString *currencySymbol = [Utils mapCountryToCurrency:countryName];
+    
+    NSLog(@"CurrencyCode: %@", countryName);
+    NSLog(@"Country Code: %@", currencySymbol);
+    NSLog(@"Longitute: %@", longt);
+    NSLog(@"Lattitude: %@", lat);
+    
+    if (self.currentLocation == nil){
+        self.currentLocation = [[Location alloc] init];
+    }
+    self.currentLocation.country = [[NSString alloc] initWithString:countryName];
+    self.currentLocation.currency = [[NSString alloc] initWithString:currencySymbol];
+    self.currentLocation.lattitude = [lat doubleValue];
+    self.currentLocation.longitude = [longt doubleValue];
+    
+
+}
 
 #pragma mark - CLLocationManagerDelegate Methods
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
     NSDate* eventDate = newLocation.timestamp;
+
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
     if (abs(howRecent) < 15.0)
     {
@@ -35,53 +83,15 @@
                   newLocation.coordinate.longitude);
             NSLog(@"Horizontal Accuracy:%f", newLocation.horizontalAccuracy);
             
-            
-            NSString *lat = [NSString stringWithFormat:@"%f", newLocation.coordinate.latitude];
-            NSString *longt = [NSString stringWithFormat:@"%f", newLocation.coordinate.longitude];
-            //NSString *gKey = @"AIzaSyC3G9bERz7ktJkqxvnnRx_Sb9ld8jKQErk";
-            //NSString *radius = @"100";
-            //NSString *pipe = @"|";
-            //NSString *e_pipe = [pipe stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            //NSString *type =@"restaurant";
-            //type = [type stringByAppendingString:e_pipe];
-            //type = [type stringByAppendingString:@"bar"];
-            NSString *placeString  = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?latlng=%@,%@&sensor=true",lat,longt];
-            NSLog(@"request string: %@",placeString);
-            
-            NSURL *placeURL = [NSURL URLWithString:placeString];
-            NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:placeURL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5.0];
-            [request setHTTPMethod:@"GET"];
-            NSURLResponse* response;
-            NSError* error = nil;
-            
-            //Capturing server response
-            NSData* result = [NSURLConnection sendSynchronousRequest:request  returningResponse:&response       error:&error];
-            NSError *myError = nil;
-            NSDictionary *res = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&myError];
-            
-            
-            NSArray *firstResultAddress = [[[res objectForKey:@"results"] objectAtIndex:0] objectForKey:@"address_components"];
-            
-            
-            NSString *countryName = [Utils addressComponent:@"country" inAddressArray:firstResultAddress ofType:@"short_name"];
-            NSString *currencySymbol = [Utils mapCountryToCurrency:countryName];
-            
-            NSLog(@"CurrencyCode: %@", countryName);
-            NSLog(@"Country Code: %@", currencySymbol);
-            NSLog(@"Longitute: %@", longt);
-            NSLog(@"Lattitude: %@", lat);
-            
-            if (self.currentLocation == nil){
-                self.currentLocation = [[Location alloc] init];
+            if ((self.currentLocation.lattitude != self.locationManager.location.coordinate.latitude) ||
+                (self.currentLocation.longitude != self.locationManager.location.coordinate.longitude)) {
+                [self loadLocaleFromAPI:newLocation];
+                self.locationState = Defined;
+                //clear places array
+                if (self.places != nil) {
+                    [self.places removeAllObjects];
+                }
             }
-            self.currentLocation.country = [[NSString alloc] initWithString:countryName];
-            self.currentLocation.currency = [[NSString alloc] initWithString:currencySymbol];
-            self.currentLocation.lattitude = [lat doubleValue];
-            self.currentLocation.longitude = [longt doubleValue];
-            
-            self.locationState = Defined;
-            //Record location and figure out currency code
- 
             
             //Optional: turn off location services once we've gotten a good location
             //[manager stopUpdatingLocation];

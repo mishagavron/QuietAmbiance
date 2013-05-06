@@ -33,9 +33,11 @@
 @property (weak) IBOutlet UIButton *callIt;
 
 
-
+@property (strong) NSString* reference;
 @property (strong) Place* place;
 @property (strong) PlaceDetails* placeDetail;
+
+
 @property CGFloat viewTotalHeight;
 
 - (IBAction)mapItSelected:(id)sender;

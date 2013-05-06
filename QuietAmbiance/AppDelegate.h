@@ -25,6 +25,9 @@ typedef enum {
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
 @property (strong, nonatomic) Location *currentLocation;
+@property (strong) NSMutableArray *places;
 @property LocationType locationState;
+
+-(void) loadLocaleFromAPI:(CLLocation *)location;
 
 @end

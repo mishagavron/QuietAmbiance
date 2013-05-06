@@ -83,14 +83,17 @@
 }
 
 - (void)loadPlaces {
-    //load Nearby places content
+    //load Nearby places content only if places array is not populated
+    
+    if (self.places == nil) {
+        self.places = [[NSMutableArray alloc] init];
+    }
+    
+    if ([self.places count] >0) return;  // no need to reload from API
+    
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     CLLocation *currentLocation=appDelegate.locationManager.location;
     
-    NSLog([NSString stringWithFormat:@"\nlatitude: %+.6f\nlongitude: %+.6f\naccuracy: %f",
-           currentLocation.coordinate.latitude,
-           currentLocation.coordinate.longitude,
-           currentLocation.horizontalAccuracy]);
     
     NSString *lat = [NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude];
     NSString *longt = [NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude];
@@ -124,10 +127,6 @@
                               JSONObjectWithData:JSON
                               options:NSJSONReadingMutableLeaves
                               error:nil];
-        
-    if (self.places == nil) {
-        self.places = [[NSMutableArray alloc] init];
-    }
         
     [self.places removeAllObjects];
     CLLocation *locA = [[CLLocation alloc] initWithLatitude:appDelegate.currentLocation.lattitude longitude:appDelegate.currentLocation.longitude];
@@ -197,7 +196,7 @@
     if ([self.places count] > 0) {
         [self sortOrderChanged];
     }
-
+    appDelegate.places = self.places;
 }
 
 - (void)didReceiveMemoryWarning

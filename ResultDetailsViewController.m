@@ -30,7 +30,7 @@
 
 @implementation ResultDetailsViewController
 
-@synthesize place,placeDetail,viewTotalHeight;
+@synthesize place,placeDetail,viewTotalHeight,reference;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -84,6 +84,8 @@
 {
     [super viewDidLoad];
 
+    if (self.reference == self.place.reference) return; //no need to relad form API
+    
     self.viewTotalHeight = 0.0f;
     [self.tableView registerNib:[UINib nibWithNibName:@"ReviewCell" bundle:nil] forCellReuseIdentifier:@"ReviewCell"];
     
@@ -192,6 +194,7 @@
     }
     self.iPhoto.image = self.place.iPhoto;
     self.iRating.image = self.place.iRating;
+    self.reference = self.place.reference;
 
  }
 

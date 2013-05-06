@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NearbyListViewController.h"
 
 @interface NearbyListViewController : UITableViewController
 
