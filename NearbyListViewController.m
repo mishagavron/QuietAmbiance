@@ -89,11 +89,11 @@
         self.places = [[NSMutableArray alloc] init];
     }
     
-    if ([self.places count] >0) return;  // no need to reload from API
     
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     CLLocation *currentLocation=appDelegate.locationManager.location;
     
+    if ([appDelegate.places count] >0) return;  // no need to reload from API
     
     NSString *lat = [NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude];
     NSString *longt = [NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude];

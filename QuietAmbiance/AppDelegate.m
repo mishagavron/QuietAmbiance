@@ -62,8 +62,8 @@
     }
     self.currentLocation.country = [[NSString alloc] initWithString:countryName];
     self.currentLocation.currency = [[NSString alloc] initWithString:currencySymbol];
-    self.currentLocation.lattitude = [lat doubleValue];
-    self.currentLocation.longitude = [longt doubleValue];
+    self.currentLocation.lattitude = location.coordinate.latitude;
+    self.currentLocation.longitude = location.coordinate.longitude;
     
 
 }

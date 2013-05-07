@@ -84,7 +84,7 @@
 {
     [super viewDidLoad];
 
-    if (self.reference == self.place.reference) return; //no need to relad form API
+    if ([self.reference isEqualToString:self.place.reference]) return; //no need to relad form API
     
     self.viewTotalHeight = 0.0f;
     [self.tableView registerNib:[UINib nibWithNibName:@"ReviewCell" bundle:nil] forCellReuseIdentifier:@"ReviewCell"];
