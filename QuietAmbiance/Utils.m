@@ -186,6 +186,33 @@ static NSString *googleKey = @"AIzaSyC3G9bERz7ktJkqxvnnRx_Sb9ld8jKQErk";
     return img;
 }
 
++ (UIImage *) mapAmbianceToImage:(double) rating {
+    
+    UIImage *img = [[UIImage alloc] init];
+    
+    if (rating < -70.00) {
+        img = [UIImage imageNamed:@"shh_0.png"];
+    }
+    else if (rating >= -70.00 && rating < -60.00) {
+        img = [UIImage imageNamed:@"shh_1.png"];
+    }
+    else if (rating >= -60.00 && rating < -40.00) {
+        img = [UIImage imageNamed:@"shh_2.png"];
+    }
+    else if (rating >= -40.00 && rating < -20.00) {
+        img = [UIImage imageNamed:@"shh_3.png"];
+    }
+    else if (rating >= -20.00 && rating < 0) {
+        img = [UIImage imageNamed:@"shh_4.png"];
+    }
+    else if (rating > 0) {
+        img = [UIImage imageNamed:@"shh_5.png"];
+    }
+    
+    return img;
+}
+
+
 + (CLLocationDistance) distanceInMeters:(CLLocation *)from To:(CLLocation *)to {
     CLLocationDistance distance = [from distanceFromLocation:to];
     return (distance);

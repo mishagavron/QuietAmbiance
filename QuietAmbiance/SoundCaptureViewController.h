@@ -7,7 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import <CoreAudio/CoreAudioTypes.h>
 
-@interface SoundCaptureViewController : UIViewController
+@interface SoundCaptureViewController : UITableViewController {
+    AVAudioRecorder *recorder;
+    NSTimer *levelTimer;
+    double avgSound;
+    
+    UIActivityIndicatorView *spinner;
+}
+
+- (void)levelTimerCallback:(NSTimer *)timer;
+
+@property (strong) NSMutableArray *places;
+
+@property double rowHeight;
+
+- (void)loadPlaces;
+- (void)refreshTable:(UIRefreshControl *)refresh;
 
 @end
