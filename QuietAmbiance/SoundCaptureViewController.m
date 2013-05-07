@@ -52,7 +52,7 @@
     //UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshTable:) forControlEvents:UIControlEventValueChanged];
     
-    self.rowHeight = 80.0;
+    self.rowHeight = 50.0;
     [self loadPlaces];
 }
 
@@ -311,7 +311,9 @@
         cell.rVicinity.text = place.vicinity;
         //cell.rSoundLevel
         
-        
+        UIImage *image = [UIImage imageNamed:@"record.png"]; //or wherever you take your image from
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        cell.accessoryView = imageView;
     }
     return cell;
 }
