@@ -12,5 +12,15 @@
 
 @synthesize name, reference, place_id, icon, rating, price_level, longitude, lattitude, soundLevel, sampleAverage,vicinity,iPhoto,iSound,iRating;
 
-
+- (id)init
+{
+    self = [super init];
+    if (self)
+    {
+        self.iRating = nil;
+        self.iSound = nil;
+        self.iPhoto = nil;
+    }
+    return self;
+}
 @end

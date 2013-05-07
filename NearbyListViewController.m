@@ -25,7 +25,7 @@
 
 @implementation NearbyListViewController
 
-@synthesize places;
+//@synthesize places;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -67,7 +67,7 @@
                                             otherButtonTitles:nil];
         [alert show];
     }     
-    if (([self.places count] == 0) && (appDelegate.locationState == Defined)) {
+    if (([appDelegate.places count] == 0) && (appDelegate.locationState == Defined)) {
         [self loadPlaces];
         [self.tableView reloadData];
     }
@@ -85,12 +85,12 @@
 - (void)loadPlaces {
     //load Nearby places content only if places array is not populated
     
-    if (self.places == nil) {
-        self.places = [[NSMutableArray alloc] init];
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appDelegate.places == nil) {
+        appDelegate.places = [[NSMutableArray alloc] init];
     }
     
     
-    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     CLLocation *currentLocation=appDelegate.locationManager.location;
     
     if ([appDelegate.places count] >0) return;  // no need to reload from API
@@ -128,7 +128,7 @@
                               options:NSJSONReadingMutableLeaves
                               error:nil];
         
-    [self.places removeAllObjects];
+    [appDelegate.places removeAllObjects];
     CLLocation *locA = [[CLLocation alloc] initWithLatitude:appDelegate.currentLocation.lattitude longitude:appDelegate.currentLocation.longitude];
 
     int count = 0;
@@ -180,10 +180,10 @@
         place.reference_photo = photo_ref;
         
         //NSLog(@"name: %@", name);
-        [self.places addObject:place];
+        [appDelegate.places addObject:place];
         count++;
     }
-    if (([self.places count] == 0) && (appDelegate.locationState == Defined)) {
+    if (([appDelegate.places count] == 0) && (appDelegate.locationState == Defined)) {
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Nearby Places"
                                            message:@"Sorry, there are no Places nearby."
@@ -193,10 +193,10 @@
         [alert show];
     }
     
-    if ([self.places count] > 0) {
+    if ([appDelegate.places count] > 0) {
         [self sortOrderChanged];
     }
-    appDelegate.places = self.places;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -217,8 +217,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger ret = 0;
-    if (self.places != nil) {
-        ret= [self.places count];
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appDelegate.places != nil) {
+        ret= [appDelegate.places count];
     }
     
     return ret;
@@ -230,7 +231,7 @@
 }
 
 -(IBAction) sortOrderChanged{
-    
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     NSArray *mySortDescriptors = nil;
     if (self.sortControl.selectedSegmentIndex == 0) { //Quiet
         
@@ -259,8 +260,8 @@
         mySortDescriptors = [NSArray arrayWithObject:highToLow];
 
     }
-    NSArray *sortedArray = [self.places sortedArrayUsingDescriptors:mySortDescriptors];
-    self.places = [sortedArray mutableCopy];
+    NSArray *sortedArray = [appDelegate.places sortedArrayUsingDescriptors:mySortDescriptors];
+    appDelegate.places = [sortedArray mutableCopy];
     [self.tableView reloadData];
     
 }
@@ -271,9 +272,10 @@
     ResultCell *cell = (ResultCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
 
-    if ([self.places count] > 0) {
+    if ([appDelegate.places count] > 0) {
         
-        Place *place = [self.places objectAtIndex:(long)indexPath.row];
+        Place *place = [appDelegate.places objectAtIndex:(long)indexPath.row];
+
         NSString *row_text = @"";
         // NSString *row_text_details = @"";
         NSString *price_level = @"";
@@ -299,27 +301,32 @@
             icon = @"establishment.png";
         }
         UIImage *icon_img = [UIImage imageNamed:icon];
-        // download the photo
-        if ([place.reference_photo length] != 0) {
-            NSString *gKey = [Utils getKey];
-            NSString *height = [NSString stringWithFormat:@"%d",(int)self.rowHeight];
+        
+        if (place.iPhoto == nil) {
+            // download the photo
+            if ([place.reference_photo length] != 0) {
+                NSString *gKey = [Utils getKey];
+                NSString *height = [NSString stringWithFormat:@"%d",(int)self.rowHeight];
             
-            NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&sensor=false&key=%@",height,place.reference_photo,gKey];
+                NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&sensor=false&key=%@",height,place.reference_photo,gKey];
                 //NSLog(@"request string: %@",placeString);
-            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:placeString]];
-            AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
+                NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:placeString]];
+                AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
                     
                     
                 // MyManagedObject has a custom setters (setPhoto:,setThumb:) that save the
                 // images to disk and store the file path in the database
                 cell.rPhoto.image = image;
                 place.iPhoto = image;
-            }];
-            [operation start];
-        }
-        else {
-            cell.rPhoto.image = no_photo;
-            place.iPhoto = no_photo;
+                }];
+                [operation start];
+            }
+            else {
+                cell.rPhoto.image = no_photo;
+                place.iPhoto = no_photo;
+            }
+        } else {
+            cell.rPhoto.image = place.iPhoto;
         }
     
         CLLocation *locA = [[CLLocation alloc] initWithLatitude:appDelegate.currentLocation.lattitude longitude:appDelegate.currentLocation.longitude];
@@ -338,56 +345,62 @@
         cell.rVicinity.text = place.vicinity;
         //cell.rSoundLevel
             
-        NSString *placeString  = [NSString stringWithFormat:@"http://upbeat.azurewebsites.net/api/beats/getbeatbygoogleid/%@",place.place_id];
-        //NSLog(@"request string: %@",placeString);
+        //load Shishes
+        if (place.iSound == nil) {
+            NSString *placeString  = [NSString stringWithFormat:@"http://upbeat.azurewebsites.net/api/beats/getbeatbygoogleid/%@",place.place_id];
+            //NSLog(@"request string: %@",placeString);
             
-        NSURL *placeURL = [NSURL URLWithString:placeString];
-        NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:placeURL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5.0];
-        [request setHTTPMethod:@"GET"];
+            NSURL *placeURL = [NSURL URLWithString:placeString];
+            NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:placeURL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5.0];
+            [request setHTTPMethod:@"GET"];
             
-        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            AFJSONRequestOperation *operation = [ AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
                 //NSLog(@"IP Address: %@", [JSON valueForKeyPath:@"origin"]);
-        NSLog(@"connectionDidFinishLoading");
-                
-        NSLog(@"%@", JSON);
-                
-        // convert to JSON
-        NSError *myError = nil;
-        NSString *sound_level = @"";
-                
-        //NSDictionary *res = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves error:&myError];
-        NSDictionary *res = (NSDictionary *) JSON;
-        NSLog(@"error : %@", myError);
-                
-        NSString *sampleavg = [res objectForKey:@"SampleAvg"];
-                
-        NSLog(@"sampleavg: %@", sampleavg);
-            
-        UIImage *ambiance_img = [Utils mapAmbianceToImage:[sampleavg doubleValue]];
-            
-        cell.rSoundLevel.image = ambiance_img;
-                
-        //NSString *beatid = [res valueForKeyPath:@"Beat.BeatId"];
-                
-        //NSLog(@"beatid: %@", beatid);
-                
-        for(NSDictionary *sndresult in [res valueForKeyPath:@"Beat.SoundSamples"]){
-            sound_level = [sndresult objectForKey:@"SoundLevel"];
+                NSLog(@"connectionDidFinishLoading");
                     
-            NSLog(@"soundlevel: %@", sound_level);
+                NSLog(@"%@", JSON);
                 
-            //NSLog(@"BeatId: %@", [result objectForKey:@"BeatId"]);
-            }
+                // convert to JSON
+                NSError *myError = nil;
+                NSString *sound_level = @"";
                 
-        //[self.myTableView reloadData];
+                //NSDictionary *res = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves     error:&myError];
+                NSDictionary *res = (NSDictionary *) JSON;
+                NSLog(@"error : %@", myError);
                 
-            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                NSString *sampleavg = [res objectForKey:@"SampleAvg"];
+                
+                NSLog(@"sampleavg: %@", sampleavg);
+            
+                UIImage *ambiance_img = [Utils mapAmbianceToImage:[sampleavg doubleValue]];
+        
+                place.iSound = ambiance_img;
+                cell.rSoundLevel.image = ambiance_img;
+                
+                //NSString *beatid = [res valueForKeyPath:@"Beat.BeatId"];
+                
+                //NSLog(@"beatid: %@", beatid);
+                
+                for(NSDictionary *sndresult in [res valueForKeyPath:@"Beat.SoundSamples"]){
+                    sound_level = [sndresult objectForKey:@"SoundLevel"];
+                    
+                    NSLog(@"soundlevel: %@", sound_level);
+                
+                    //NSLog(@"BeatId: %@", [result objectForKey:@"BeatId"]);
+                }
+                
+                //[self.myTableView reloadData];
+                
+                } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                 NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
-        }];
+                place.iSound = [UIImage imageNamed:@"shh_not_available.png"];
+            }];
          
 
-    [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:nil];
-    [operation start];
+            [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:nil];
+            [operation start];
+        }
+        cell.rSoundLevel.image = place.iSound;
         
         //[self.tableView reloadData];
     }
@@ -438,7 +451,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    Place *p = [self.places objectAtIndex:indexPath.row];
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    Place *p = [appDelegate.places objectAtIndex:indexPath.row];
     
     
     ResultDetailsViewController *rvc = [[ResultDetailsViewController alloc] initWithNibName:@"ResultDetailsViewController" bundle:nil];

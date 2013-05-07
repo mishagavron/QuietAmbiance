@@ -11,7 +11,7 @@
 
 @interface NearbyListViewController : UITableViewController
 
-@property (strong) NSMutableArray *places;
+//@property (strong) NSMutableArray *places;
 
 @property double rowHeight;
 

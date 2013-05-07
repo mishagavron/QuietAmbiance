@@ -20,7 +20,7 @@
 
 - (void)levelTimerCallback:(NSTimer *)timer;
 
-@property (strong) NSMutableArray *places;
+//@property (strong) NSMutableArray *places;
 
 @property double rowHeight;
 

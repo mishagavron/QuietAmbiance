@@ -24,7 +24,7 @@
 
 @implementation SoundCaptureViewController
 
-@synthesize places;
+//@synthesize places;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -72,7 +72,7 @@
                                  otherButtonTitles:nil];
         [alert show];
     }
-    if (([self.places count] == 0) && (appDelegate.locationState == Defined)) {
+    if (([appDelegate.places count] == 0) && (appDelegate.locationState == Defined)) {
         [self loadPlaces];
         [self.tableView reloadData];
     }
@@ -90,13 +90,15 @@
 - (void)loadPlaces {
     //load Nearby places content only if places array is not populated
     
-    if (self.places == nil) {
-        self.places = [[NSMutableArray alloc] init];
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    if (appDelegate.places == nil) {
+        appDelegate.places = [[NSMutableArray alloc] init];
     }
     
-    if ([self.places count] >0) return;  // no need to reload from API
+    if ([appDelegate.places count] >0) return;  // no need to reload from API
     
-    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+
     CLLocation *currentLocation=appDelegate.locationManager.location;
     
     
@@ -133,7 +135,7 @@
                         options:NSJSONReadingMutableLeaves
                         error:nil];
     
-    [self.places removeAllObjects];
+    [appDelegate.places removeAllObjects];
     CLLocation *locA = [[CLLocation alloc] initWithLatitude:appDelegate.currentLocation.lattitude longitude:appDelegate.currentLocation.longitude];
     
     int count = 0;
@@ -185,10 +187,10 @@
         place.reference_photo = photo_ref;
         
         //NSLog(@"name: %@", name);
-        [self.places addObject:place];
+        [appDelegate.places addObject:place];
         count++;
     }
-    if (([self.places count] == 0) && (appDelegate.locationState == Defined)) {
+    if (([appDelegate.places count] == 0) && (appDelegate.locationState == Defined)) {
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Nearby Places"
                                                         message:@"Sorry, there are no Places nearby."
@@ -198,7 +200,7 @@
         [alert show];
     }
     
-    appDelegate.places = self.places;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -218,9 +220,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     NSInteger ret = 0;
-    if (self.places != nil) {
-        ret= [self.places count];
+    if (appDelegate.places != nil) {
+        ret= [appDelegate.places count];
     }
     
     return ret;
@@ -237,9 +240,9 @@
     ResultCell *cell = (ResultCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     
-    if ([self.places count] > 0) {
+    if ([appDelegate.places count] > 0) {
         
-        Place *place = [self.places objectAtIndex:(long)indexPath.row];
+        Place *place = [appDelegate.places objectAtIndex:(long)indexPath.row];
         NSString *row_text = @"";
         // NSString *row_text_details = @"";
         NSString *price_level = @"";
@@ -265,27 +268,31 @@
             icon = @"establishment.png";
         }
         UIImage *icon_img = [UIImage imageNamed:icon];
-        // download the photo
-        if ([place.reference_photo length] != 0) {
-            NSString *gKey = [Utils getKey];
-            NSString *height = [NSString stringWithFormat:@"%d",(int)self.rowHeight];
+        if (place.iPhoto == nil) {
+            // download the photo
+            if ([place.reference_photo length] != 0) {
+                NSString *gKey = [Utils getKey];
+                NSString *height = [NSString stringWithFormat:@"%d",(int)self.rowHeight];
             
-            NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&sensor=false&key=%@",height,place.reference_photo,gKey];
-            //NSLog(@"request string: %@",placeString);
-            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:placeString]];
-            AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
+                NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&sensor=false&key=%@",height,place.reference_photo,gKey];
+                //NSLog(@"request string: %@",placeString);
+                NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:placeString]];
+                AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
                 
                 
                 // MyManagedObject has a custom setters (setPhoto:,setThumb:) that save the
                 // images to disk and store the file path in the database
                 cell.rPhoto.image = image;
                 place.iPhoto = image;
-            }];
-            [operation start];
-        }
-        else {
-            cell.rPhoto.image = no_photo;
-            place.iPhoto = no_photo;
+                }];
+                [operation start];
+                }
+                else {
+                    cell.rPhoto.image = no_photo;
+                    place.iPhoto = no_photo;
+                }
+        } else {
+            cell.rPhoto.image = place.iPhoto;
         }
         
         CLLocation *locA = [[CLLocation alloc] initWithLatitude:appDelegate.currentLocation.lattitude longitude:appDelegate.currentLocation.longitude];
@@ -313,8 +320,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    Place *p = [self.places objectAtIndex:indexPath.row];
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    Place *p = [appDelegate.places objectAtIndex:indexPath.row];
+    p.iSound = nil;
     
     NSURL *url = [NSURL fileURLWithPath:@"/dev/null"];
     

@@ -32,6 +32,7 @@
 @property (strong) UIImage *iPhoto;
 @property (strong) UIImage *iSound;
 
+- (id)init;
 
 
 @end
