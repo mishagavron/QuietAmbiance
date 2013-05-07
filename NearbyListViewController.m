@@ -337,8 +337,6 @@
         cell.rName.text = row_text;
         cell.rVicinity.text = place.vicinity;
         //cell.rSoundLevel
-
-        /*
             
         NSString *placeString  = [NSString stringWithFormat:@"http://upbeat.azurewebsites.net/api/beats/getbeatbygoogleid/%@",place.place_id];
         //NSLog(@"request string: %@",placeString);
@@ -364,6 +362,10 @@
         NSString *sampleavg = [res objectForKey:@"SampleAvg"];
                 
         NSLog(@"sampleavg: %@", sampleavg);
+            
+        UIImage *ambiance_img = [Utils mapAmbianceToImage:[sampleavg doubleValue]];
+            
+        cell.rSoundLevel.image = ambiance_img;
                 
         //NSString *beatid = [res valueForKeyPath:@"Beat.BeatId"];
                 
@@ -377,9 +379,6 @@
             //NSLog(@"BeatId: %@", [result objectForKey:@"BeatId"]);
             }
                 
-                
-        cell.rSoundLevel.text = [NSString stringWithFormat: @"%@", sampleavg];
-                
         //[self.myTableView reloadData];
                 
             } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
@@ -389,7 +388,7 @@
 
     [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:nil];
     [operation start];
-         */
+        
         //[self.tableView reloadData];
     }
     return cell;

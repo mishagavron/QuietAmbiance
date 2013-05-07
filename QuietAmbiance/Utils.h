@@ -15,6 +15,7 @@
 + (NSString *) mapPriceToString:(NSInteger) price UsingCurrency:(NSString*) currency;
 + (NSString *) mapRatingToString:(double) rating;
 + (UIImage *) mapRatingToImage:(double) rating;
++ (UIImage *) mapAmbianceToImage:(double) rating;
 + (UIImage*)mergeImage:(UIImage*)first withImage:(UIImage*)second;
 + (NSString *)addressComponent:(NSString *)component inAddressArray:(NSArray *)array ofType:(NSString *)type;
 + (CLLocationDistance) distanceInMiles:(CLLocation*) from To:(CLLocation*) to;

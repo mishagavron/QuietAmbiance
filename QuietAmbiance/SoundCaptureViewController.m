@@ -336,7 +336,6 @@
         
         spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         
-        //spinner.frame = CGRectMake(1000, 1000, 240, 240);
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         cell.accessoryView = spinner;
         [spinner startAnimating];
