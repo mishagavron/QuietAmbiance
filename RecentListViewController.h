@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface RecentListViewController : UITableViewController
+{
+    NSArray *recentList;
+}
 
 @end

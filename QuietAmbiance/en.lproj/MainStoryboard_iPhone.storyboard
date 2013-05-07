@@ -63,10 +63,6 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <connections>
-                            <outlet property="dataSource" destination="apj-4K-K5n" id="TUz-ke-bRb"/>
-                            <outlet property="delegate" destination="apj-4K-K5n" id="8Xx-iZ-10k"/>
-                        </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="G9R-cV-xWR"/>
                 </tableViewController>
@@ -236,9 +232,6 @@
         </class>
         <class className="SoundCaptureViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SoundCaptureViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activity" candidateClass="UIActivityIndicatorView"/>
-            </relationships>
         </class>
         <class className="UIRefreshControl" superclassName="UIControl">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UIRefreshControl.h"/>

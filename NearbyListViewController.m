@@ -462,6 +462,22 @@
     //[[NSBundle mainBundle] loadNibNamed:@"ResultDetailsViewController" owner:self options:nil];
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
     [self.navigationController pushViewController:rvc animated:YES];
+    
+    //Save to Recent List
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *key = @"recentlist";
+    
+    NSArray *oldrecentList = [defaults stringArrayForKey:key];
+    NSMutableArray *recentlist = [[NSMutableArray alloc] initWithArray:oldrecentList];
+    
+    [recentlist addObject:p.place_id];
+    
+    NSArray *value = recentlist;
+    
+    [defaults setObject:value forKey:key];
+    [defaults synchronize];
 
 }
 
