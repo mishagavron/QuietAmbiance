@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import "Utils.h"
 #import "Place.h"
-#import "ResultCell.h"
+#import "RecordCell.h"
 #import "UserPreferences.h"
 #import "AFHTTPRequestOperation.h"
 #import "AFJSONRequestOperation.h"
@@ -47,7 +47,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.tableView registerNib:[UINib nibWithNibName:@"ResultCell" bundle:nil] forCellReuseIdentifier:@"ResultCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"RecordCell" bundle:nil] forCellReuseIdentifier:@"RecordCell"];
     
     //UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshTable:) forControlEvents:UIControlEventValueChanged];
@@ -236,8 +236,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"ResultCell";
-    ResultCell *cell = (ResultCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"RecordCell";
+    RecordCell *cell = (RecordCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     
     if ([appDelegate.places count] > 0) {

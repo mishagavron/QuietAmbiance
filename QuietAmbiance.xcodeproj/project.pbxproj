@@ -76,6 +76,8 @@
 		86DEC93317377FD10014027D /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DEC93217377FD00014027D /* SearchViewController.m */; };
 		86DEC936173780230014027D /* SoundCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DEC935173780230014027D /* SoundCaptureViewController.m */; };
 		86DEC9381738AF230014027D /* shh_not_available.png in Resources */ = {isa = PBXBuildFile; fileRef = 86DEC9371738AF230014027D /* shh_not_available.png */; };
+		B58D8DBC1739828E00976852 /* RecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58D8DBB1739828E00976852 /* RecordCell.xib */; };
+		B58D8DBF1739829E00976852 /* RecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58D8DBE1739829E00976852 /* RecordCell.m */; };
 		B5FE7DBD1739752200EDCD9E /* loud_1.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FE7DB31739752100EDCD9E /* loud_1.png */; };
 		B5FE7DBE1739752200EDCD9E /* loud_2.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FE7DB41739752100EDCD9E /* loud_2.png */; };
 		B5FE7DBF1739752200EDCD9E /* loud_3.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FE7DB51739752100EDCD9E /* loud_3.png */; };
@@ -185,6 +187,9 @@
 		86DEC934173780230014027D /* SoundCaptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundCaptureViewController.h; sourceTree = "<group>"; };
 		86DEC935173780230014027D /* SoundCaptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundCaptureViewController.m; sourceTree = "<group>"; };
 		86DEC9371738AF230014027D /* shh_not_available.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shh_not_available.png; sourceTree = "<group>"; };
+		B58D8DBB1739828E00976852 /* RecordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordCell.xib; sourceTree = SOURCE_ROOT; };
+		B58D8DBD1739829E00976852 /* RecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordCell.h; sourceTree = "<group>"; };
+		B58D8DBE1739829E00976852 /* RecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordCell.m; sourceTree = "<group>"; };
 		B5FE7DB31739752100EDCD9E /* loud_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loud_1.png; sourceTree = "<group>"; };
 		B5FE7DB41739752100EDCD9E /* loud_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loud_2.png; sourceTree = "<group>"; };
 		B5FE7DB51739752100EDCD9E /* loud_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loud_3.png; sourceTree = "<group>"; };
@@ -277,6 +282,9 @@
 				86C181701724A83F0037389D /* NearbyListViewController.m */,
 				86C181581724A56B0037389D /* AppDelegate.h */,
 				86C181591724A56B0037389D /* AppDelegate.m */,
+				B58D8DBD1739829E00976852 /* RecordCell.h */,
+				B58D8DBE1739829E00976852 /* RecordCell.m */,
+				B58D8DBB1739828E00976852 /* RecordCell.xib */,
 				86C181E41725CE760037389D /* ResultCell.h */,
 				86C181E51725CE760037389D /* ResultCell.m */,
 				86C1817E1724ACF40037389D /* ResultCell.xib */,
@@ -466,6 +474,7 @@
 				B5FE7DC41739752200EDCD9E /* quiet_3.png in Resources */,
 				B5FE7DC51739752200EDCD9E /* quiet_4.png in Resources */,
 				B5FE7DC61739752200EDCD9E /* quiet_5.png in Resources */,
+				B58D8DBC1739828E00976852 /* RecordCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,6 +509,7 @@
 				86DEC92A1736F8490014027D /* UserPreferences.m in Sources */,
 				86DEC93317377FD10014027D /* SearchViewController.m in Sources */,
 				86DEC936173780230014027D /* SoundCaptureViewController.m in Sources */,
+				B58D8DBF1739829E00976852 /* RecordCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
