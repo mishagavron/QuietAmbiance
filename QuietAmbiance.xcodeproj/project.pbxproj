@@ -61,15 +61,6 @@
 		86C181BB172514BD0037389D /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C181951724B21F0037389D /* AFURLConnectionOperation.m */; };
 		86C181BD172514BD0037389D /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C181971724B21F0037389D /* AFXMLRequestOperation.m */; };
 		86C181BF172514BD0037389D /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C181991724B21F0037389D /* UIImageView+AFNetworking.m */; };
-		86C181D21725C8300037389D /* record.png in Resources */ = {isa = PBXBuildFile; fileRef = 86C181C01725C82F0037389D /* record.png */; };
-		86C181D41725C8300037389D /* zoom_lens.png in Resources */ = {isa = PBXBuildFile; fileRef = 86C181C21725C82F0037389D /* zoom_lens.png */; };
-		86C181D51725C8300037389D /* Ambiance_Logo_V1.png in Resources */ = {isa = PBXBuildFile; fileRef = 86C181C31725C82F0037389D /* Ambiance_Logo_V1.png */; };
-		86C181D61725C8300037389D /* LocationImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 86C181C41725C82F0037389D /* LocationImage.png */; };
-		86C181D71725C8300037389D /* Ambiance_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 86C181C51725C82F0037389D /* Ambiance_Logo.png */; };
-		86C181E01725C8300037389D /* restaurant.png in Resources */ = {isa = PBXBuildFile; fileRef = 86C181CE1725C82F0037389D /* restaurant.png */; };
-		86C181E11725C8300037389D /* establishment.png in Resources */ = {isa = PBXBuildFile; fileRef = 86C181CF1725C8300037389D /* establishment.png */; };
-		86C181E21725C8300037389D /* cafe.png in Resources */ = {isa = PBXBuildFile; fileRef = 86C181D01725C8300037389D /* cafe.png */; };
-		86C181E31725C8300037389D /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 86C181D11725C8300037389D /* bar.png */; };
 		86C181E61725CE770037389D /* ResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C181E51725CE760037389D /* ResultCell.m */; };
 		86C181EA172646A10037389D /* quiet_zone.png in Resources */ = {isa = PBXBuildFile; fileRef = 86C181E9172646A10037389D /* quiet_zone.png */; };
 		86DEC92A1736F8490014027D /* UserPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DEC9291736F8490014027D /* UserPreferences.m */; };
@@ -78,6 +69,15 @@
 		86DEC9381738AF230014027D /* shh_not_available.png in Resources */ = {isa = PBXBuildFile; fileRef = 86DEC9371738AF230014027D /* shh_not_available.png */; };
 		B58D8DBC1739828E00976852 /* RecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58D8DBB1739828E00976852 /* RecordCell.xib */; };
 		B58D8DBF1739829E00976852 /* RecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58D8DBE1739829E00976852 /* RecordCell.m */; };
+		B58D8E0E173D645B00976852 /* establishment.png in Resources */ = {isa = PBXBuildFile; fileRef = B58D8E0D173D645B00976852 /* establishment.png */; };
+		B58D8E10173D64A600976852 /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = B58D8E0F173D64A500976852 /* bar.png */; };
+		B58D8E12173D64D400976852 /* restaurant.png in Resources */ = {isa = PBXBuildFile; fileRef = B58D8E11173D64D400976852 /* restaurant.png */; };
+		B58D8E14173D64DE00976852 /* cafe.png in Resources */ = {isa = PBXBuildFile; fileRef = B58D8E13173D64DE00976852 /* cafe.png */; };
+		B58D8E16173D660100976852 /* record.png in Resources */ = {isa = PBXBuildFile; fileRef = B58D8E15173D660000976852 /* record.png */; };
+		B58D8E18173D662F00976852 /* zoom_lens.png in Resources */ = {isa = PBXBuildFile; fileRef = B58D8E17173D662E00976852 /* zoom_lens.png */; };
+		B58D8E1A173D664A00976852 /* Ambiance_Logo_V1.png in Resources */ = {isa = PBXBuildFile; fileRef = B58D8E19173D664A00976852 /* Ambiance_Logo_V1.png */; };
+		B58D8E1C173D667000976852 /* LocationImage.png in Resources */ = {isa = PBXBuildFile; fileRef = B58D8E1B173D666F00976852 /* LocationImage.png */; };
+		B58D8E1E173D668700976852 /* Ambiance_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B58D8E1D173D668500976852 /* Ambiance_Logo.png */; };
 		B5FE7DBD1739752200EDCD9E /* loud_1.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FE7DB31739752100EDCD9E /* loud_1.png */; };
 		B5FE7DBE1739752200EDCD9E /* loud_2.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FE7DB41739752100EDCD9E /* loud_2.png */; };
 		B5FE7DBF1739752200EDCD9E /* loud_3.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FE7DB51739752100EDCD9E /* loud_3.png */; };
@@ -168,15 +168,6 @@
 		86C181A71724E9950037389D /* target@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "target@2x.png"; sourceTree = "<group>"; };
 		86C181A91724E9DD0037389D /* target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = target.png; sourceTree = "<group>"; };
 		86C181AB172512F90037389D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		86C181C01725C82F0037389D /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = record.png; path = ../../Ambiance/Locator/record.png; sourceTree = "<group>"; };
-		86C181C21725C82F0037389D /* zoom_lens.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoom_lens.png; path = ../../Ambiance/Locator/zoom_lens.png; sourceTree = "<group>"; };
-		86C181C31725C82F0037389D /* Ambiance_Logo_V1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Ambiance_Logo_V1.png; path = ../../Ambiance/Locator/Ambiance_Logo_V1.png; sourceTree = "<group>"; };
-		86C181C41725C82F0037389D /* LocationImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LocationImage.png; path = ../../Ambiance/Locator/LocationImage.png; sourceTree = "<group>"; };
-		86C181C51725C82F0037389D /* Ambiance_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Ambiance_Logo.png; path = ../../Ambiance/Locator/Ambiance_Logo.png; sourceTree = "<group>"; };
-		86C181CE1725C82F0037389D /* restaurant.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = restaurant.png; path = ../../Ambiance/Locator/restaurant.png; sourceTree = "<group>"; };
-		86C181CF1725C8300037389D /* establishment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = establishment.png; path = ../../Ambiance/Locator/establishment.png; sourceTree = "<group>"; };
-		86C181D01725C8300037389D /* cafe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cafe.png; path = ../../Ambiance/Locator/cafe.png; sourceTree = "<group>"; };
-		86C181D11725C8300037389D /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bar.png; path = ../../Ambiance/Locator/bar.png; sourceTree = "<group>"; };
 		86C181E41725CE760037389D /* ResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultCell.h; sourceTree = "<group>"; };
 		86C181E51725CE760037389D /* ResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultCell.m; sourceTree = "<group>"; };
 		86C181E9172646A10037389D /* quiet_zone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quiet_zone.png; sourceTree = "<group>"; };
@@ -190,6 +181,15 @@
 		B58D8DBB1739828E00976852 /* RecordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordCell.xib; sourceTree = SOURCE_ROOT; };
 		B58D8DBD1739829E00976852 /* RecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordCell.h; sourceTree = "<group>"; };
 		B58D8DBE1739829E00976852 /* RecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordCell.m; sourceTree = "<group>"; };
+		B58D8E0D173D645B00976852 /* establishment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = establishment.png; sourceTree = "<group>"; };
+		B58D8E0F173D64A500976852 /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar.png; sourceTree = "<group>"; };
+		B58D8E11173D64D400976852 /* restaurant.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restaurant.png; sourceTree = "<group>"; };
+		B58D8E13173D64DE00976852 /* cafe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cafe.png; sourceTree = "<group>"; };
+		B58D8E15173D660000976852 /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record.png; sourceTree = "<group>"; };
+		B58D8E17173D662E00976852 /* zoom_lens.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoom_lens.png; sourceTree = "<group>"; };
+		B58D8E19173D664A00976852 /* Ambiance_Logo_V1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ambiance_Logo_V1.png; sourceTree = "<group>"; };
+		B58D8E1B173D666F00976852 /* LocationImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LocationImage.png; sourceTree = "<group>"; };
+		B58D8E1D173D668500976852 /* Ambiance_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ambiance_Logo.png; sourceTree = "<group>"; };
 		B5FE7DB31739752100EDCD9E /* loud_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loud_1.png; sourceTree = "<group>"; };
 		B5FE7DB41739752100EDCD9E /* loud_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loud_2.png; sourceTree = "<group>"; };
 		B5FE7DB51739752100EDCD9E /* loud_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loud_3.png; sourceTree = "<group>"; };
@@ -299,6 +299,15 @@
 		86C181501724A56B0037389D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B58D8E1D173D668500976852 /* Ambiance_Logo.png */,
+				B58D8E1B173D666F00976852 /* LocationImage.png */,
+				B58D8E19173D664A00976852 /* Ambiance_Logo_V1.png */,
+				B58D8E17173D662E00976852 /* zoom_lens.png */,
+				B58D8E15173D660000976852 /* record.png */,
+				B58D8E13173D64DE00976852 /* cafe.png */,
+				B58D8E11173D64D400976852 /* restaurant.png */,
+				B58D8E0F173D64A500976852 /* bar.png */,
+				B58D8E0D173D645B00976852 /* establishment.png */,
 				B5FE7DB31739752100EDCD9E /* loud_1.png */,
 				B5FE7DB41739752100EDCD9E /* loud_2.png */,
 				B5FE7DB51739752100EDCD9E /* loud_3.png */,
@@ -314,14 +323,6 @@
 				86A1F475173346540032B3A4 /* no_author_pic.png */,
 				86178CED1728CA8000FF570D /* no_photos.png */,
 				86C181E9172646A10037389D /* quiet_zone.png */,
-				86C181C01725C82F0037389D /* record.png */,
-				86C181C21725C82F0037389D /* zoom_lens.png */,
-				86C181C31725C82F0037389D /* Ambiance_Logo_V1.png */,
-				86C181C41725C82F0037389D /* LocationImage.png */,
-				86C181C51725C82F0037389D /* Ambiance_Logo.png */,
-				86C181CE1725C82F0037389D /* restaurant.png */,
-				86C181CF1725C8300037389D /* establishment.png */,
-				86C181D01725C8300037389D /* cafe.png */,
 				86AF126E172F58DA00A30174 /* star_0_0.png */,
 				86AF126F172F58DA00A30174 /* star_0_5.png */,
 				86AF1270172F58DA00A30174 /* star_1_0.png */,
@@ -333,7 +334,6 @@
 				86AF1276172F58DA00A30174 /* star_4_0.png */,
 				86AF1277172F58DA00A30174 /* star_4_5.png */,
 				86AF1278172F58DA00A30174 /* star_5_0.png */,
-				86C181D11725C8300037389D /* bar.png */,
 				86C1819F1724D16A0037389D /* back_button.jpeg */,
 				86C181511724A56B0037389D /* QuietAmbiance-Info.plist */,
 				86C181A71724E9950037389D /* target@2x.png */,
@@ -437,15 +437,6 @@
 				86C181A61724E2920037389D /* back_button_50.png in Resources */,
 				86C181A81724E9950037389D /* target@2x.png in Resources */,
 				86C181AA1724E9DD0037389D /* target.png in Resources */,
-				86C181D21725C8300037389D /* record.png in Resources */,
-				86C181D41725C8300037389D /* zoom_lens.png in Resources */,
-				86C181D51725C8300037389D /* Ambiance_Logo_V1.png in Resources */,
-				86C181D61725C8300037389D /* LocationImage.png in Resources */,
-				86C181D71725C8300037389D /* Ambiance_Logo.png in Resources */,
-				86C181E01725C8300037389D /* restaurant.png in Resources */,
-				86C181E11725C8300037389D /* establishment.png in Resources */,
-				86C181E21725C8300037389D /* cafe.png in Resources */,
-				86C181E31725C8300037389D /* bar.png in Resources */,
 				86C181EA172646A10037389D /* quiet_zone.png in Resources */,
 				86178CEE1728CA8000FF570D /* no_photos.png in Resources */,
 				86178CF01728CCEE00FF570D /* iphone-no-places-nearby.png in Resources */,
@@ -475,6 +466,15 @@
 				B5FE7DC51739752200EDCD9E /* quiet_4.png in Resources */,
 				B5FE7DC61739752200EDCD9E /* quiet_5.png in Resources */,
 				B58D8DBC1739828E00976852 /* RecordCell.xib in Resources */,
+				B58D8E0E173D645B00976852 /* establishment.png in Resources */,
+				B58D8E10173D64A600976852 /* bar.png in Resources */,
+				B58D8E12173D64D400976852 /* restaurant.png in Resources */,
+				B58D8E14173D64DE00976852 /* cafe.png in Resources */,
+				B58D8E16173D660100976852 /* record.png in Resources */,
+				B58D8E18173D662F00976852 /* zoom_lens.png in Resources */,
+				B58D8E1A173D664A00976852 /* Ambiance_Logo_V1.png in Resources */,
+				B58D8E1C173D667000976852 /* LocationImage.png in Resources */,
+				B58D8E1E173D668700976852 /* Ambiance_Logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
