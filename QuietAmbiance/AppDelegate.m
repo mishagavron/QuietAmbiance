@@ -87,6 +87,8 @@
                 (self.currentLocation.longitude != self.locationManager.location.coordinate.longitude)) {
                 [self loadLocaleFromAPI:newLocation];
                 self.locationState = Defined;
+                self.currentLocation.lattitude = newLocation.coordinate.latitude;
+                self.currentLocation.longitude = newLocation.coordinate.longitude;
                 //clear places array
                 if (self.places != nil) {
                     [self.places removeAllObjects];

@@ -13,6 +13,10 @@
 		86178D0F1729A6CD00FF570D /* PlaceDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 86178D0E1729A6CC00FF570D /* PlaceDetails.m */; };
 		86178D121729AF3600FF570D /* Review.m in Sources */ = {isa = PBXBuildFile; fileRef = 86178D111729AF3600FF570D /* Review.m */; };
 		86178D14172B2F6400FF570D /* ResultDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86178D13172B2F6400FF570D /* ResultDetailsViewController.xib */; };
+		86377272173DA8AD0064639D /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86377270173DA8AD0064639D /* MessageViewController.m */; };
+		86377273173DA8AD0064639D /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86377271173DA8AD0064639D /* MessageViewController.xib */; };
+		86377277173DA8C40064639D /* SearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 86377275173DA8C40064639D /* SearchCell.m */; };
+		86377278173DA8C40064639D /* SearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86377276173DA8C40064639D /* SearchCell.xib */; };
 		86A1F46E1732DFD60032B3A4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86A1F46D1732DFD60032B3A4 /* MapKit.framework */; };
 		86A1F476173346540032B3A4 /* no_author_pic.png in Resources */ = {isa = PBXBuildFile; fileRef = 86A1F475173346540032B3A4 /* no_author_pic.png */; };
 		86A1F47817342DF40032B3A4 /* ReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86A1F47717342DF40032B3A4 /* ReviewCell.xib */; };
@@ -99,6 +103,12 @@
 		86178D101729AF3600FF570D /* Review.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Review.h; sourceTree = "<group>"; };
 		86178D111729AF3600FF570D /* Review.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Review.m; sourceTree = "<group>"; };
 		86178D13172B2F6400FF570D /* ResultDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResultDetailsViewController.xib; sourceTree = "<group>"; };
+		8637726F173DA8AD0064639D /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
+		86377270173DA8AD0064639D /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
+		86377271173DA8AD0064639D /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
+		86377274173DA8C40064639D /* SearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCell.h; sourceTree = "<group>"; };
+		86377275173DA8C40064639D /* SearchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCell.m; sourceTree = "<group>"; };
+		86377276173DA8C40064639D /* SearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchCell.xib; sourceTree = "<group>"; };
 		86A1F46D1732DFD60032B3A4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		86A1F475173346540032B3A4 /* no_author_pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_author_pic.png; sourceTree = "<group>"; };
 		86A1F47717342DF40032B3A4 /* ReviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReviewCell.xib; sourceTree = "<group>"; };
@@ -255,6 +265,12 @@
 		86C1814F1724A56B0037389D /* QuietAmbiance */ = {
 			isa = PBXGroup;
 			children = (
+				86377274173DA8C40064639D /* SearchCell.h */,
+				86377275173DA8C40064639D /* SearchCell.m */,
+				86377276173DA8C40064639D /* SearchCell.xib */,
+				8637726F173DA8AD0064639D /* MessageViewController.h */,
+				86377270173DA8AD0064639D /* MessageViewController.m */,
+				86377271173DA8AD0064639D /* MessageViewController.xib */,
 				86DEC934173780230014027D /* SoundCaptureViewController.h */,
 				86DEC935173780230014027D /* SoundCaptureViewController.m */,
 				86DEC9281736F8490014027D /* UserPreferences.h */,
@@ -475,6 +491,8 @@
 				B58D8E1A173D664A00976852 /* Ambiance_Logo_V1.png in Resources */,
 				B58D8E1C173D667000976852 /* LocationImage.png in Resources */,
 				B58D8E1E173D668700976852 /* Ambiance_Logo.png in Resources */,
+				86377273173DA8AD0064639D /* MessageViewController.xib in Resources */,
+				86377278173DA8C40064639D /* SearchCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,6 +528,8 @@
 				86DEC93317377FD10014027D /* SearchViewController.m in Sources */,
 				86DEC936173780230014027D /* SoundCaptureViewController.m in Sources */,
 				B58D8DBF1739829E00976852 /* RecordCell.m in Sources */,
+				86377272173DA8AD0064639D /* MessageViewController.m in Sources */,
+				86377277173DA8C40064639D /* SearchCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

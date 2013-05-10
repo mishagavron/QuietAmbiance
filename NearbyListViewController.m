@@ -17,6 +17,7 @@
 #import "AFHTTPClient.h"
 #include "AFImageRequestOperation.h"
 #include "ResultDetailsViewController.h"
+#include "MessageViewController.h"
 
 @interface NearbyListViewController ()
 
@@ -55,18 +56,8 @@
     
     [super viewWillAppear:flag];
     
-    UIAlertView *alert = nil;
-    
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
-    if (appDelegate.locationState == Undefined) {
-        
-        alert = [[UIAlertView alloc] initWithTitle:@"Location Services"
-                                            message:@"You must enable Location Services to use this app."
-                                            delegate:nil
-                                            cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
-        [alert show];
-    }     
+ 
     if (([appDelegate.places count] == 0) && (appDelegate.locationState == Defined)) {
         [self loadPlaces];
         [self.tableView reloadData];
@@ -76,6 +67,8 @@
 
 
 -(void) refreshTable:(UIRefreshControl *)refresh {
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate.places removeAllObjects];
     [self loadPlaces];
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
@@ -90,7 +83,15 @@
         appDelegate.places = [[NSMutableArray alloc] init];
     }
     
-    
+    if (appDelegate.locationState == Undefined) {
+        
+        MessageViewController *msgc = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
+        [msgc setMessage:@"You must enable Location Services to use this app."];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [self.navigationController pushViewController:msgc animated:YES];
+        return;
+        
+    }
     CLLocation *currentLocation=appDelegate.locationManager.location;
     
     if ([appDelegate.places count] >0) return;  // no need to reload from API
@@ -185,12 +186,11 @@
     }
     if (([appDelegate.places count] == 0) && (appDelegate.locationState == Defined)) {
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Nearby Places"
-                                           message:@"Sorry, there are no Places nearby."
-                                          delegate:nil
-                                 cancelButtonTitle:@"OK"
-                                 otherButtonTitles:nil];
-        [alert show];
+        MessageViewController *msgc = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
+        [msgc setMessage:@"Sorry, no nearby places are found."];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [self.navigationController pushViewController:msgc animated:YES];
+        return;
     }
     
     if ([appDelegate.places count] > 0) {
@@ -260,6 +260,13 @@
         mySortDescriptors = [NSArray arrayWithObject:highToLow];
 
     }
+    else if (self.sortControl.selectedSegmentIndex == 4){ //Name
+        NSSortDescriptor *highToLow = [[NSSortDescriptor alloc] initWithKey:@"name"
+                                                                  ascending:YES];
+        mySortDescriptors = [NSArray arrayWithObject:highToLow];
+        
+    }
+
     NSArray *sortedArray = [appDelegate.places sortedArrayUsingDescriptors:mySortDescriptors];
     appDelegate.places = [sortedArray mutableCopy];
     [self.tableView reloadData];
@@ -285,7 +292,7 @@
         NSString *row_index = [NSString stringWithFormat:@"%d.", indexPath.row+1];
         row_text = [row_text stringByAppendingString:row_index];
         row_text = [row_text stringByAppendingString:place.name];
-        price_level = [Utils mapPriceToString:[place.price_level integerValue] UsingCurrency:currency];
+         price_level = [Utils mapPriceToString:(NSInteger)place.priceNum UsingCurrency:currency];
         rating = [Utils mapRatingToString:[place.rating doubleValue]];
         UIImage *rating_img = [Utils mapRatingToImage:[place.rating doubleValue]];
         UIImage *no_photo = [UIImage imageNamed:@"no_photos.png"];
@@ -373,7 +380,7 @@
                 NSLog(@"sampleavg: %@", sampleavg);
             
                 UIImage *ambiance_img = [Utils mapAmbianceToImage:[sampleavg doubleValue]];
-        
+                place.soundNum = [sampleavg doubleValue];
                 place.iSound = ambiance_img;
                 cell.rSoundLevel.image = ambiance_img;
                 
