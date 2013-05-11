@@ -313,7 +313,7 @@
             // download the photo
             if ([place.reference_photo length] != 0) {
                 NSString *gKey = [Utils getKey];
-                NSString *height = [NSString stringWithFormat:@"%d",(int)self.rowHeight];
+                NSString *height = [NSString stringWithFormat:@"%f",cell.frame.size.height];
             
                 NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&sensor=false&key=%@",height,place.reference_photo,gKey];
                 //NSLog(@"request string: %@",placeString);

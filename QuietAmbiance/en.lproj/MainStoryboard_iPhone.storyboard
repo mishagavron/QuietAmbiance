@@ -28,7 +28,7 @@
                                     <outlet property="delegate" destination="SR5-ce-GqR" id="2uy-xW-Q9r"/>
                                 </connections>
                             </searchBar>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="BhJ-gG-clo">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="BhJ-gG-clo">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="114" id="zTO-FO-EW8"/>
                                 </constraints>
@@ -65,11 +65,15 @@
                                 <segment title="Price" width="43.200000000000003"/>
                                 <segment title="Name" width="45.200000000000003"/>
                             </segments>
+                            <connections>
+                                <action selector="sortOrderChanged" destination="SR5-ce-GqR" eventType="valueChanged" id="nmm-H0-0ji"/>
+                            </connections>
                         </segmentedControl>
                     </navigationItem>
                     <connections>
                         <outlet property="myView" destination="2qz-kw-vL6" id="jZz-w3-1Of"/>
                         <outlet property="searchBar" destination="pmH-fS-mle" id="M0H-5q-ZUJ"/>
+                        <outlet property="sliderControl" destination="BhJ-gG-clo" id="7PR-IF-f11"/>
                         <outlet property="sortControl" destination="35u-Mp-CrT" id="8kU-r2-GG7"/>
                         <outlet property="tableView" destination="J6U-Ua-zRB" id="YjO-vB-eKc"/>
                     </connections>

@@ -26,5 +26,6 @@
 - (void) checkBoxViewChangedState:(SSCheckBoxView *) cbv;
 
 @property (strong) NSMutableArray *searchResults;
+@property (strong) NSString *searchText;
 
 @end
