@@ -14,6 +14,7 @@
 #import "Utils.h"
 #import "UserPreferences.h"
 #import "MessageViewController.h"
+#import "SSCheckBoxView.h"
 
 @interface SearchViewController ()
 
@@ -48,6 +49,12 @@
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 
+- (void) checkBoxViewChangedState:(SSCheckBoxView *)cbv
+{
+    NSLog(@"checkBoxViewChangedState: %d", cbv.checked);
+    
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -64,7 +71,18 @@
     self.searchBar.text = @"";
     self.searchResults = [[NSMutableArray alloc] init];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    //clear cell values
+    
+    CGRect frame = CGRectMake(276, 77, 20, 20);
+    BOOL checked = TRUE;
+    self.checkBox = [[SSCheckBoxView alloc] initWithFrame:frame
+                                                style:kSSCheckBoxViewStyleGlossy
+                                                checked:checked];
+    
+    [self.checkBox setStateChangedTarget:self
+                                selector:@selector(checkBoxViewChangedState:)];
+    
+    [self.myView addSubview:self.checkBox];
+
     
     
 }
@@ -78,38 +96,8 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
 	[searchBar resignFirstResponder];
-	//[self filterContent:clickedSearchBar.text];
-}
-
-- (void)searchBarResultsListButtonClicked:(UISearchBar *)searchBar {
     
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
-	searchBar.text = nil;
-	[searchBar resignFirstResponder];
-	
-	[self filterContent:searchBar.text];
-}
-
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-	[self filterContent:searchText];
-}
-
-
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
-{
-	//inSearchMode = true;
-	//[searchBar setShowsCancelButton:inSearchMode animated:true];
-}
-
-
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{
-	NSString *searchText = searchBar.text;
+    NSString *searchText = searchBar.text;
     //NSLog((@"Keyboard entry %d", searchText));
     [self.searchResults removeAllObjects];
     
@@ -125,7 +113,7 @@
     NSString *radius = [Utils getSearchRadius];
     NSString *type = [Utils getSearchType];
     
-    NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/xml?query=%@&types=%@&location=%@,%@&radius=%@&sensor=false&key=%@",searchText,type,lat,longt,radius,gKey];
+    NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=%@&types=%@&location=%@,%@&radius=%@&sensor=false&key=%@",searchText,type,lat,longt,radius,gKey];
     placeString = [UserPreferences personilizeGoogleAPIURLString:placeString];
     NSLog(@"request string: %@",placeString);
     
@@ -219,9 +207,41 @@
     if ([appDelegate.places count] > 0) {
         [self sortOrderChanged];
     }
-
+    
 	
 	[self filterContent:searchText];
+	//[self filterContent:clickedSearchBar.text];
+}
+
+- (void)searchBarResultsListButtonClicked:(UISearchBar *)searchBar {
+    
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+	searchBar.text = nil;
+	[searchBar resignFirstResponder];
+	
+	[self filterContent:searchBar.text];
+}
+
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+	[self filterContent:searchText];
+}
+
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+	//inSearchMode = true;
+	//[searchBar setShowsCancelButton:inSearchMode animated:true];
+}
+
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+
 }
 
 
