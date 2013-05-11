@@ -265,6 +265,8 @@
 		86C1814F1724A56B0037389D /* QuietAmbiance */ = {
 			isa = PBXGroup;
 			children = (
+				86DEC93117377FD00014027D /* SearchViewController.h */,
+				86DEC93217377FD00014027D /* SearchViewController.m */,
 				86377274173DA8C40064639D /* SearchCell.h */,
 				86377275173DA8C40064639D /* SearchCell.m */,
 				86377276173DA8C40064639D /* SearchCell.xib */,
@@ -288,8 +290,6 @@
 				86A1F47717342DF40032B3A4 /* ReviewCell.xib */,
 				86A1F47917342E2A0032B3A4 /* ReviewCell.h */,
 				86A1F47A17342E2A0032B3A4 /* ReviewCell.m */,
-				86DEC93117377FD00014027D /* SearchViewController.h */,
-				86DEC93217377FD00014027D /* SearchViewController.m */,
 				86C1817B1724ABF10037389D /* ResultDetailsViewController.h */,
 				86C1817C1724ABF10037389D /* ResultDetailsViewController.m */,
 				86C181781724A8D80037389D /* RecentListViewController.h */,
