@@ -101,7 +101,7 @@
     [self.myView addSubview:self.checkBox];
      */
     
-    
+    //[self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -485,11 +485,6 @@
     return ret;
 }
 
-- (void)didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Do some stuff when the row is selected
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -541,13 +536,13 @@
         NSString *phrase = [appDelegate.recentSearches objectAtIndex:(long)indexPath.row];
         self.searchBar.text = phrase;
         [self searchBarSearchButtonClicked:self.searchBar];
-        [self didDeselectRowAtIndexPath:indexPath];
+        //[self didDeselectRowAtIndexPath:indexPath];
     }
     
 
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
    
-    
+    [self.tableView reloadData]; 
 
 }
 

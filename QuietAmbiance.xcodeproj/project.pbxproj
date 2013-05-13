@@ -95,6 +95,7 @@
 		86DEC93317377FD10014027D /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DEC93217377FD00014027D /* SearchViewController.m */; };
 		86DEC936173780230014027D /* SoundCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DEC935173780230014027D /* SoundCaptureViewController.m */; };
 		86DEC9381738AF230014027D /* shh_not_available.png in Resources */ = {isa = PBXBuildFile; fileRef = 86DEC9371738AF230014027D /* shh_not_available.png */; };
+		86FA090D17414D1A0097C027 /* TopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86FA090C17414D1A0097C027 /* TopViewController.m */; };
 		B58D8DBC1739828E00976852 /* RecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58D8DBB1739828E00976852 /* RecordCell.xib */; };
 		B58D8DBF1739829E00976852 /* RecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58D8DBE1739829E00976852 /* RecordCell.m */; };
 		B58D8E0E173D645B00976852 /* establishment.png in Resources */ = {isa = PBXBuildFile; fileRef = B58D8E0D173D645B00976852 /* establishment.png */; };
@@ -239,6 +240,8 @@
 		86DEC934173780230014027D /* SoundCaptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundCaptureViewController.h; sourceTree = "<group>"; };
 		86DEC935173780230014027D /* SoundCaptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundCaptureViewController.m; sourceTree = "<group>"; };
 		86DEC9371738AF230014027D /* shh_not_available.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shh_not_available.png; sourceTree = "<group>"; };
+		86FA090B17414D1A0097C027 /* TopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopViewController.h; sourceTree = "<group>"; };
+		86FA090C17414D1A0097C027 /* TopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopViewController.m; sourceTree = "<group>"; };
 		B58D8DBB1739828E00976852 /* RecordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordCell.xib; sourceTree = SOURCE_ROOT; };
 		B58D8DBD1739829E00976852 /* RecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordCell.h; sourceTree = "<group>"; };
 		B58D8DBE1739829E00976852 /* RecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordCell.m; sourceTree = "<group>"; };
@@ -391,6 +394,8 @@
 				86C181E51725CE760037389D /* ResultCell.m */,
 				86C1817E1724ACF40037389D /* ResultCell.xib */,
 				86178D13172B2F6400FF570D /* ResultDetailsViewController.xib */,
+				86FA090B17414D1A0097C027 /* TopViewController.h */,
+				86FA090C17414D1A0097C027 /* TopViewController.m */,
 				86C181611724A56B0037389D /* MainStoryboard_iPhone.storyboard */,
 				86C181641724A56B0037389D /* MainStoryboard_iPad.storyboard */,
 				86C181501724A56B0037389D /* Supporting Files */,
@@ -640,6 +645,7 @@
 				86AEB500173ED81F009CE69D /* SSCheckBoxView.m in Sources */,
 				86AEB501173ED81F009CE69D /* UIHelpers.m in Sources */,
 				86AEB52E17409247009CE69D /* SearchPhraseCell.m in Sources */,
+				86FA090D17414D1A0097C027 /* TopViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
