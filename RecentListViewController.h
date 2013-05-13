@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Place.h"
 
 @interface RecentListViewController : UITableViewController
 {
     NSArray *recentList;
 }
+
+@property (strong) Place* place;
+@property double rowHeight;
 
 @end
