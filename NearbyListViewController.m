@@ -316,7 +316,7 @@
                 NSString *height = [NSString stringWithFormat:@"%f",cell.frame.size.height];
             
                 NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&sensor=false&key=%@",height,place.reference_photo,gKey];
-                //NSLog(@"request string: %@",placeString);
+                NSLog(@"request string: %@",placeString);
                 NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:placeString]];
                 AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
                     

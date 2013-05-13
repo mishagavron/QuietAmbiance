@@ -71,7 +71,7 @@
     self.searchResults = [[NSMutableArray alloc] init];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
-    CGRect frame = CGRectMake(276, 77, 20, 20);
+    CGRect frame = CGRectMake(5, 58, 20, 20);
     BOOL checked = TRUE;
     self.checkBox = [[SSCheckBoxView alloc] initWithFrame:frame
                                                 style:kSSCheckBoxViewStyleGlossy
