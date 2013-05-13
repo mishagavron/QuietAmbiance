@@ -187,9 +187,35 @@
         }
         UIImage *icon_img = [UIImage imageNamed:icon];
         
-        cell.rDistance.text = @"";
-        cell.rPhoto.image = no_photo;
+        if (place.iPhoto == nil) {
+            // download the photo
+            if ([place.reference_photo length] != 0) {
+                NSString *gKey = [Utils getKey];
+                NSString *height = [NSString stringWithFormat:@"%f",cell.frame.size.height];
+                
+                NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&sensor=false&key=%@",height,place.reference_photo,gKey];
+                //NSLog(@"request string: %@",placeString);
+                NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:placeString]];
+                AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
+                    
+                    
+                    // MyManagedObject has a custom setters (setPhoto:,setThumb:) that save the
+                    // images to disk and store the file path in the database
+                    cell.rPhoto.image = image;
+                    place.iPhoto = image;
+                }];
+                [operation start];
+            }
+            else {
+                cell.rPhoto.image = no_photo;
+                place.iPhoto = no_photo;
+            }
+        } else {
+            cell.rPhoto.image = place.iPhoto;
+        }
         
+        cell.rDistance.text = @"";
+
         place.iRating = rating_img;
         place.price_level = price_level;
         //place.iSound =
