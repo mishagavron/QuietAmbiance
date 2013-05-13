@@ -272,13 +272,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    Place *p = [appDelegate.recentPlaces objectAtIndex:indexPath.row];
+    
+    
+    ResultDetailsViewController *rvc = [[ResultDetailsViewController alloc] initWithNibName:@"ResultDetailsViewController" bundle:nil];
+    rvc.place = p;
+    rvc.place.iPhoto = [UIImage imageWithData:UIImagePNGRepresentation(p.iPhoto)];
+    //AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    //[[NSBundle mainBundle] loadNibNamed:@"ResultDetailsViewController" owner:self options:nil];
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    [self.navigationController pushViewController:rvc animated:YES];
 }
 
 @end
