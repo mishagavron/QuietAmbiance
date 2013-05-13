@@ -348,9 +348,9 @@
             // download the photo
             if ([place.reference_photo length] != 0) {
                 NSString *gKey = [Utils getKey];
-                NSString *height = [NSString stringWithFormat:@"%f", cell.frame.size.height];
+                NSString *height = [NSString stringWithFormat:@"%u", (int)cell.frame.size.height];
                 
-                NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&sensor=false&key=%@",height,place.reference_photo,gKey];
+                NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&maxheight=%@&photoreference=%@&sensor=false&key=%@",height,height,place.reference_photo,gKey];
                 //NSLog(@"request string: %@",placeString);
                 NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:placeString]];
                 AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
@@ -512,19 +512,29 @@
         NSString *key = @"recentlist";
         
         NSArray *oldrecentList = [defaults stringArrayForKey:key];
-        NSMutableArray *recentlist = [[NSMutableArray alloc] initWithArray:oldrecentList];
         
-        [recentlist addObject:p.reference];
-        
-        if ([recentlist count] > 10)
-        {
-            [recentlist removeObjectAtIndex:0];
+        BOOL placeFound = FALSE;
+        for (NSString *refPlace in oldrecentList) {
+            if ([refPlace isEqualToString:p.reference]) {
+                placeFound = TRUE;
+            }
         }
-        
-        NSArray *value = recentlist;
-        
-        [defaults setObject:value forKey:key];
-        [defaults synchronize];
+
+        if (placeFound == FALSE) {
+            NSMutableArray *recentlist = [[NSMutableArray alloc] initWithArray:oldrecentList];
+            
+            [recentlist addObject:p.reference];
+            
+            if ([recentlist count] > 10)
+            {
+                [recentlist removeObjectAtIndex:0];
+            }
+            
+            NSArray *value = recentlist;
+            
+            [defaults setObject:value forKey:key];
+            [defaults synchronize];
+        }
         
  
     } else if ([appDelegate.recentSearches count] > 0) {

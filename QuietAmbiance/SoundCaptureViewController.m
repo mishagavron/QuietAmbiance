@@ -295,13 +295,16 @@
             icon = @"establishment.png";
         }
         UIImage *icon_img = [UIImage imageNamed:icon];
+        
+        // do not use place photo image
+        /*
         if (place.iPhoto == nil) {
             // download the photo
             if ([place.reference_photo length] != 0) {
                 NSString *gKey = [Utils getKey];
                 NSString *height = [NSString stringWithFormat:@"%d",(int)self.rowHeight];
             
-                NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&sensor=false&key=%@",height,place.reference_photo,gKey];
+                NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&maxheight=%@&photoreference=%@&sensor=false&key=%@",height,height,place.reference_photo,gKey];
                 //NSLog(@"request string: %@",placeString);
                 NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:placeString]];
                 AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
@@ -321,7 +324,7 @@
         } else {
             cell.rPhoto.image = place.iPhoto;
         }
-        
+        */
         CLLocation *locA = [[CLLocation alloc] initWithLatitude:appDelegate.currentLocation.lattitude longitude:appDelegate.currentLocation.longitude];
         double lat = [place.lattitude doubleValue];
         double longt = [place.longitude doubleValue];

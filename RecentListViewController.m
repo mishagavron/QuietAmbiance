@@ -52,11 +52,11 @@
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     
     appDelegate.recentPlaces = [[NSMutableArray alloc] init];
-    
+    CLLocation *locA = [[CLLocation alloc] initWithLatitude:appDelegate.currentLocation.lattitude longitude:appDelegate.currentLocation.longitude];
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     NSString *key = @"recentlist";
-    
     recentList = [defaults stringArrayForKey:key];
     
     for(NSString *recentPlace in recentList)
@@ -115,6 +115,19 @@
             place.icon = icon;
             place.place_id = place_id;
             place.vicinity = vicinity;
+            NSDictionary *geometry = [result objectForKey:@"geometry"];
+            if (geometry != nil) {
+                NSDictionary *placeLoc = [geometry objectForKey:@"location"];
+                NSString *lat = [placeLoc objectForKey:@"lat"];
+                NSString *lng = [placeLoc  objectForKey:@"lng"];
+                double latD = [lat doubleValue];
+                double longtD = [lng doubleValue];
+                CLLocation *locB = [[CLLocation alloc] initWithLatitude:latD longitude:longtD];
+                place.distanceNumMeters = [Utils distanceInMeters:locA To:locB];
+                
+                place.lattitude = lat;
+                place.longitude = lng;
+            }
             
             for (NSDictionary *photos in [result objectForKey:@"photos"]) {
                 photo_ref = [photos objectForKey:@"photo_reference"];
@@ -191,9 +204,9 @@
             // download the photo
             if ([place.reference_photo length] != 0) {
                 NSString *gKey = [Utils getKey];
-                NSString *height = [NSString stringWithFormat:@"%f",cell.frame.size.height];
+                NSString *height = [NSString stringWithFormat:@"%u",(int)cell.frame.size.height];
                 
-                NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&photoreference=%@&sensor=false&key=%@",height,place.reference_photo,gKey];
+                NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/photo?maxwidth=%@&maxheight=%@&photoreference=%@&sensor=false&key=%@",height,height,place.reference_photo,gKey];
                 //NSLog(@"request string: %@",placeString);
                 NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:placeString]];
                 AFImageRequestOperation *operation = [AFImageRequestOperation imageRequestOperationWithRequest:request success:^(UIImage *image) {
@@ -214,7 +227,12 @@
             cell.rPhoto.image = place.iPhoto;
         }
         
-        cell.rDistance.text = @"";
+        CLLocation *locA = [[CLLocation alloc] initWithLatitude:appDelegate.currentLocation.lattitude longitude:appDelegate.currentLocation.longitude];
+        double lat = [place.lattitude doubleValue];
+        double longt = [place.longitude doubleValue];
+        CLLocation *locB = [[CLLocation alloc] initWithLatitude:lat longitude:longt];
+        cell.rDistance.text = [Utils distanceString:locA To:locB];
+
 
         place.iRating = rating_img;
         place.price_level = price_level;
