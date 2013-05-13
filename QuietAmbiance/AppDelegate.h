@@ -28,6 +28,8 @@ typedef enum {
 
 @property (strong) NSMutableArray *places;
 
+@property (strong) NSMutableArray *recentPlaces;
+
 @property LocationType locationState;
 
 -(void) loadLocaleFromAPI:(CLLocation *)location;

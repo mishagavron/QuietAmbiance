@@ -7,6 +7,16 @@
 //
 
 #import "RecentListViewController.h"
+#import "AppDelegate.h"
+#import "Utils.h"
+#import "Place.h"
+#import "ResultCell.h"
+#import "UserPreferences.h"
+#import "AFHTTPRequestOperation.h"
+#import "AFJSONRequestOperation.h"
+#import "AFHTTPClient.h"
+#include "AFImageRequestOperation.h"
+#include "ResultDetailsViewController.h"
 
 @interface RecentListViewController ()
 
@@ -26,6 +36,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.tableView registerNib:[UINib nibWithNibName:@"ResultCell" bundle:nil] forCellReuseIdentifier:@"ResultCell"];
+    
+    //UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refreshTable:) forControlEvents:UIControlEventValueChanged];
+    
+    self.rowHeight = 80.0;
+    [self loadPlaces];
+    
+
+}
+
+- (void)loadPlaces {
+
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    appDelegate.recentPlaces = [[NSMutableArray alloc] init];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -33,14 +59,74 @@
     
     recentList = [defaults stringArrayForKey:key];
     
-    NSLog(@"recentList: %@", recentList);
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    for(NSString *recentPlace in recentList)
+    {
+        NSString *gKey = [Utils getKey];
+        NSString *placeDetailsString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?reference=%@&sensor=false&key=%@",recentPlace,gKey];
+        NSLog(@"request string: %@",placeDetailsString);
+        
+        NSURL *placeURL = [NSURL URLWithString:placeDetailsString];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        
+        [request setHTTPMethod:@"GET"];
+        [request setURL:placeURL];
+        //NSURLResponse* response;
+        //NSError* error = nil;
+        
+        NSError *error = [[NSError alloc] init];
+        NSHTTPURLResponse *responseCode = nil;
+        NSData *JSON;
+        JSON = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+        
+        if([responseCode statusCode] != 200){
+            NSLog(@"Error getting %@, HTTP status code %i", placeDetailsString, [responseCode statusCode]);
+        }
+        
+        NSDictionary *res =[NSJSONSerialization
+                            JSONObjectWithData:JSON
+                            options:NSJSONReadingMutableLeaves
+                            error:nil];
+        
+        
+        int count = 0;
+        NSDictionary *result = [res objectForKey:@"result"];
+        {
+            Place *place = [[Place alloc] init];
+            
+            //NSDictionary *location = [[result objectForKey:@"geometry"] objectForKey:@"location"];
+            
+            NSString *name = [result objectForKey:@"name"];
+            NSString *photo_ref = @"";
+            
+            
+            NSString *reference = [result objectForKey:@"reference"];
+            NSString *rating = [result objectForKey:@"rating"];
+            NSString *price_level = [result objectForKey:@"price_level"];
+            NSString *icon = [result objectForKey:@"icon"];
+            NSString *place_id = [result objectForKey:@"id"];
+            NSString *vicinity = [result objectForKey:@"vicinity"];
+            place.name = name;
+            place.reference = reference;
+            place.rating = rating;
+            place.ratingNum = [rating doubleValue];
+            place.price_level = price_level;
+            place.priceNum = [price_level doubleValue];
+            place.soundNum = (double)count;
+            place.icon = icon;
+            place.place_id = place_id;
+            place.vicinity = vicinity;
+            
+            for (NSDictionary *photos in [result objectForKey:@"photos"]) {
+                photo_ref = [photos objectForKey:@"photo_reference"];
+            }
+            
+            place.reference_photo = photo_ref;
+            [appDelegate.recentPlaces addObject:place];
+            count++;
+        }
+    }
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -67,61 +153,120 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"ResultCell";
+    ResultCell *cell = (ResultCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    if ([appDelegate.recentPlaces count] > 0) {
+        
+        Place *place = [appDelegate.recentPlaces objectAtIndex:(long)indexPath.row];
+
+        NSString *row_text = @"";
+        // NSString *row_text_details = @"";
+        NSString *price_level = @"";
+        NSString *rating = @"";
+        NSString *icon = @"";
+        NSString *currency = appDelegate.currentLocation.currency;
+        NSString *row_index = [NSString stringWithFormat:@"%d.", indexPath.row+1];
+        row_text = [row_text stringByAppendingString:row_index];
+        row_text = [row_text stringByAppendingString:place.name];
+        price_level = [Utils mapPriceToString:[place.price_level integerValue] UsingCurrency:currency];
+        rating = [Utils mapRatingToString:[place.rating doubleValue]];
+        UIImage *rating_img = [Utils mapRatingToImage:[place.rating doubleValue]];
+        UIImage *no_photo = [UIImage imageNamed:@"no_photos.png"];
+        icon = place.icon;
+        if ([icon rangeOfString:@"bar"].location != NSNotFound) {
+            icon = @"bar.png";
+        } else if ([icon rangeOfString:@"cafe"].location != NSNotFound) {
+            icon = @"cafe.png";
+        } else if ([icon rangeOfString:@"restaurant"].location != NSNotFound) {
+            icon = @"restaurant.png";
+        }
+        else {
+            icon = @"establishment.png";
+        }
+        UIImage *icon_img = [UIImage imageNamed:icon];
+        
+        cell.rDistance.text = @"";
+        cell.rPhoto.image = no_photo;
+        
+        place.iRating = rating_img;
+        place.price_level = price_level;
+        //place.iSound =
+        cell.rRating.image = rating_img;
+        cell.rPriceLevel.text = price_level;
+        cell.rIcon.image  = icon_img;
+        cell.rName.text = row_text;
+        cell.rVicinity.text = place.vicinity;
+        //cell.rSoundLevel
+        
+        //load Shishes
+        if (place.iSound == nil) {
+            NSString *placeString  = [NSString stringWithFormat:@"http://upbeat.azurewebsites.net/api/beats/getbeatbygoogleid/%@",place.place_id];
+            //NSLog(@"request string: %@",placeString);
+            
+            NSURL *placeURL = [NSURL URLWithString:placeString];
+            NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:placeURL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5.0];
+            [request setHTTPMethod:@"GET"];
+            
+            AFJSONRequestOperation *operation = [ AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                //NSLog(@"IP Address: %@", [JSON valueForKeyPath:@"origin"]);
+                NSLog(@"connectionDidFinishLoading");
+                
+                NSLog(@"%@", JSON);
+                
+                // convert to JSON
+                NSError *myError = nil;
+                NSString *sound_level = @"";
+                
+                //NSDictionary *res = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableLeaves     error:&myError];
+                NSDictionary *res = (NSDictionary *) JSON;
+                NSLog(@"error : %@", myError);
+                
+                NSString *sampleavg = [res objectForKey:@"SampleAvg"];
+                
+                NSLog(@"sampleavg: %@", sampleavg);
+                
+                UIImage *ambiance_img = [Utils mapAmbianceToImage:[sampleavg doubleValue]];
+                
+                place.iSound = ambiance_img;
+                cell.rSoundLevel.image = ambiance_img;
+                
+                //NSString *beatid = [res valueForKeyPath:@"Beat.BeatId"];
+                
+                //NSLog(@"beatid: %@", beatid);
+                
+                for(NSDictionary *sndresult in [res valueForKeyPath:@"Beat.SoundSamples"]){
+                    sound_level = [sndresult objectForKey:@"SoundLevel"];
+                    
+                    NSLog(@"soundlevel: %@", sound_level);
+                    
+                    //NSLog(@"BeatId: %@", [result objectForKey:@"BeatId"]);
+                }
+                
+                //[self.myTableView reloadData];
+                
+            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
+                place.iSound = [UIImage imageNamed:@"shh_not_available.png"];
+            }];
+            
+            
+            [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:nil];
+            [operation start];
+        }
+        cell.rSoundLevel.image = place.iSound;
+        
+        //[self.tableView reloadData];
     }
-    
-    NSString *cellValue = [recentList objectAtIndex:indexPath.row];
-    cell.textLabel.text = cellValue;
-    
-    NSLog(@"cellValue: %@", cellValue);
-    
-    // Configure the cell...
-    
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return self.rowHeight;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 

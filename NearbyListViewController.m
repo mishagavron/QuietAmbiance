@@ -472,7 +472,12 @@
     NSArray *oldrecentList = [defaults stringArrayForKey:key];
     NSMutableArray *recentlist = [[NSMutableArray alloc] initWithArray:oldrecentList];
     
-    [recentlist addObject:p.place_id];
+    [recentlist addObject:p.reference];
+    
+    if ([recentlist count] > 10)
+    {
+        [recentlist removeObjectAtIndex:0];
+    }
     
     NSArray *value = recentlist;
     

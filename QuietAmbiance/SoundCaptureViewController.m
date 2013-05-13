@@ -356,13 +356,6 @@
         
   	} else
   		NSLog([error description]);
-	
-	/*
-     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Custom Button Pressed"
-     message:[NSString stringWithFormat: @"You pressed the custom button on cell #%i", pathToCell.row + 1]
-     delegate:self cancelButtonTitle:@"Great"
-     otherButtonTitles:nil];
-     */
     
 }
 
