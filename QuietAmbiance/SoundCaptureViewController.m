@@ -17,6 +17,7 @@
 #import "AFHTTPClient.h"
 #include "AFImageRequestOperation.h"
 #include "ResultDetailsViewController.h"
+#include "MessageViewController.h"
 
 @interface SoundCaptureViewController ()
 
@@ -60,18 +61,8 @@
     
     [super viewWillAppear:flag];
     
-    UIAlertView *alert = nil;
-    
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
-    if (appDelegate.locationState == Undefined) {
-        
-        alert = [[UIAlertView alloc] initWithTitle:@"Location Services"
-                                           message:@"You must enable Location Services to use this app."
-                                          delegate:nil
-                                 cancelButtonTitle:@"OK"
-                                 otherButtonTitles:nil];
-        [alert show];
-    }
+
     if (([appDelegate.places count] == 0) && (appDelegate.locationState == Defined)) {
         [self loadPlaces];
         [self.tableView reloadData];
@@ -81,6 +72,10 @@
 
 
 -(void) refreshTable:(UIRefreshControl *)refresh {
+    
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate.places removeAllObjects];
+    
     [self loadPlaces];
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
@@ -94,6 +89,20 @@
     
     if (appDelegate.places == nil) {
         appDelegate.places = [[NSMutableArray alloc] init];
+    }
+    
+    if (appDelegate.locationState == Undefined) {
+        
+        MessageViewController *msgc = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
+        [msgc setMessage:@"You must enable Location Services to use this app."];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [self.navigationController pushViewController:msgc animated:YES];
+        return;
+    }
+
+    if ([appDelegate.places count] > 0) {
+        
+        [self sortByDistance];
     }
     
     if ([appDelegate.places count] >0) return;  // no need to reload from API
@@ -190,17 +199,35 @@
         [appDelegate.places addObject:place];
         count++;
     }
+    if ([appDelegate.places count] > 0) {
+        
+        [self sortByDistance];
+    }
     if (([appDelegate.places count] == 0) && (appDelegate.locationState == Defined)) {
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Nearby Places"
-                                                        message:@"Sorry, there are no Places nearby."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        MessageViewController *msgc = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
+        [msgc setMessage:@"Sorry no nearby places found."];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [self.navigationController pushViewController:msgc animated:YES];
+        return;
+
     }
     
 
+}
+-(void) sortByDistance {
+    
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    NSArray *mySortDescriptors = nil;
+    
+    NSSortDescriptor *highToLow = [[NSSortDescriptor alloc] initWithKey:@"distanceNumMeters"
+                                                              ascending:YES];
+    mySortDescriptors = [NSArray arrayWithObject:highToLow];
+    
+    NSArray *sortedArray = [appDelegate.places sortedArrayUsingDescriptors:mySortDescriptors];
+    appDelegate.places = [sortedArray mutableCopy];
+    [self.tableView reloadData];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -325,6 +352,7 @@
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     Place *p = [appDelegate.places objectAtIndex:indexPath.row];
     p.iSound = nil;
+    p.soundNum = 0.;
     
     NSURL *url = [NSURL fileURLWithPath:@"/dev/null"];
     

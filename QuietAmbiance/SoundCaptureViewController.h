@@ -27,4 +27,6 @@
 - (void)loadPlaces;
 - (void)refreshTable:(UIRefreshControl *)refresh;
 
+- (void)sortByDistance;
+
 @end
