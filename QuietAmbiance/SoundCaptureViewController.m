@@ -388,6 +388,7 @@
   	} else
   		NSLog([error description]);
     
+    
 }
 
 - (void)tableView:(UITableView *)tableView willDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -430,6 +431,8 @@
     [operation start];
     
     [spinner stopAnimating];
+    
+    [self.tableView reloadData];
     
 }
 
