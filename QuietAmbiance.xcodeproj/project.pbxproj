@@ -43,6 +43,8 @@
 		86AEB527173EE001009CE69D /* cb_box_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 86AEB522173EE001009CE69D /* cb_box_on.png */; };
 		86AEB528173EE001009CE69D /* cb_box_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86AEB523173EE001009CE69D /* cb_box_on@2x.png */; };
 		86AEB529173EE001009CE69D /* cb_dark_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 86AEB524173EE001009CE69D /* cb_dark_off.png */; };
+		86AEB52B1740915A009CE69D /* SearchPhraseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86AEB52A1740915A009CE69D /* SearchPhraseCell.xib */; };
+		86AEB52E17409247009CE69D /* SearchPhraseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AEB52D17409247009CE69D /* SearchPhraseCell.m */; };
 		86AF1279172F58DA00A30174 /* star_0_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 86AF126E172F58DA00A30174 /* star_0_0.png */; };
 		86AF127A172F58DA00A30174 /* star_0_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 86AF126F172F58DA00A30174 /* star_0_5.png */; };
 		86AF127B172F58DA00A30174 /* star_1_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 86AF1270172F58DA00A30174 /* star_1_0.png */; };
@@ -160,6 +162,9 @@
 		86AEB522173EE001009CE69D /* cb_box_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cb_box_on.png; path = SSCheckBoxView/Graphics/cb_box_on.png; sourceTree = "<group>"; };
 		86AEB523173EE001009CE69D /* cb_box_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cb_box_on@2x.png"; path = "SSCheckBoxView/Graphics/cb_box_on@2x.png"; sourceTree = "<group>"; };
 		86AEB524173EE001009CE69D /* cb_dark_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cb_dark_off.png; path = SSCheckBoxView/Graphics/cb_dark_off.png; sourceTree = "<group>"; };
+		86AEB52A1740915A009CE69D /* SearchPhraseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPhraseCell.xib; sourceTree = "<group>"; };
+		86AEB52C17409247009CE69D /* SearchPhraseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchPhraseCell.h; sourceTree = "<group>"; };
+		86AEB52D17409247009CE69D /* SearchPhraseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchPhraseCell.m; sourceTree = "<group>"; };
 		86AF126E172F58DA00A30174 /* star_0_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_0_0.png; sourceTree = "<group>"; };
 		86AF126F172F58DA00A30174 /* star_0_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_0_5.png; sourceTree = "<group>"; };
 		86AF1270172F58DA00A30174 /* star_1_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_1_0.png; sourceTree = "<group>"; };
@@ -345,9 +350,12 @@
 			children = (
 				86DEC93117377FD00014027D /* SearchViewController.h */,
 				86DEC93217377FD00014027D /* SearchViewController.m */,
+				86377276173DA8C40064639D /* SearchCell.xib */,
 				86377274173DA8C40064639D /* SearchCell.h */,
 				86377275173DA8C40064639D /* SearchCell.m */,
-				86377276173DA8C40064639D /* SearchCell.xib */,
+				86AEB52A1740915A009CE69D /* SearchPhraseCell.xib */,
+				86AEB52C17409247009CE69D /* SearchPhraseCell.h */,
+				86AEB52D17409247009CE69D /* SearchPhraseCell.m */,
 				8637726F173DA8AD0064639D /* MessageViewController.h */,
 				86377270173DA8AD0064639D /* MessageViewController.m */,
 				86377271173DA8AD0064639D /* MessageViewController.xib */,
@@ -591,6 +599,7 @@
 				86AEB527173EE001009CE69D /* cb_box_on.png in Resources */,
 				86AEB528173EE001009CE69D /* cb_box_on@2x.png in Resources */,
 				86AEB529173EE001009CE69D /* cb_dark_off.png in Resources */,
+				86AEB52B1740915A009CE69D /* SearchPhraseCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,6 +639,7 @@
 				86377277173DA8C40064639D /* SearchCell.m in Sources */,
 				86AEB500173ED81F009CE69D /* SSCheckBoxView.m in Sources */,
 				86AEB501173ED81F009CE69D /* UIHelpers.m in Sources */,
+				86AEB52E17409247009CE69D /* SearchPhraseCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

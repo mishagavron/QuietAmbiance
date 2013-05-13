@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "SearchViewController.h"
 #import "SearchCell.h"
+#import "SearchPhraseCell.h"
 #import "ResultDetailsViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Utils.h"
@@ -24,7 +25,7 @@
 
 @implementation SearchViewController
 
-@synthesize searchResults;
+@synthesize searchResults, searchText;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,17 +61,34 @@
 	// Do any additional setup after loading the view.
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SearchCell" bundle:nil] forCellReuseIdentifier:@"SearchCell"];
- 
-    CALayer *layer = self.tableView.layer;
-    layer.borderWidth = 1;
-    layer.borderColor = [[UIColor grayColor] CGColor];
-    layer.cornerRadius = 10;
-    layer.masksToBounds = YES;
+    [self.tableView registerNib:[UINib nibWithNibName:@"SearchPhraseCell" bundle:nil] forCellReuseIdentifier:@"SearchPhraseCell"];
     
+    
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    self.rowHeight = 80.;
     self.searchBar.text = @"";
     self.searchResults = [[NSMutableArray alloc] init];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *key = @"recentsearch";
+    
+    if ([[defaults stringArrayForKey:key] count] > 0) {
+        
+        appDelegate.recentSearches = [NSMutableArray arrayWithArray:[defaults stringArrayForKey:key]];
+    } else {
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    }
+    
+    //CALayer *layer = self.tableView.layer;
+    //layer.borderWidth = 1;
+    //layer.borderColor = [[UIColor grayColor] CGColor];
+    //layer.cornerRadius = 10;
+    //layer.masksToBounds = YES;
+        
+    //[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    /*
     CGRect frame = CGRectMake(5, 58, 20, 20);
     BOOL checked = TRUE;
     self.checkBox = [[SSCheckBoxView alloc] initWithFrame:frame
@@ -81,7 +99,7 @@
                                 selector:@selector(checkBoxViewChangedState:)];
     
     [self.myView addSubview:self.checkBox];
-
+     */
     
     
 }
@@ -102,6 +120,7 @@
         //inSearchMode = (searchText != nil && [searchText length] > 0);
         //[searchBar setShowsCancelButton:inSearchMode animated:true];
         AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+
         
         NSString *lat = [NSString stringWithFormat:@"%f", appDelegate.currentLocation.lattitude];
         NSString *longt = [NSString stringWithFormat:@"%f", appDelegate.currentLocation.longitude];
@@ -110,7 +129,7 @@
         NSString *type = [Utils getSearchType];
         
         NSString *placeString  = nil;
-        
+        self.searchText = searchBar.text;
         if (self.checkBox.checked == TRUE) {
             placeString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=%@&types=%@&location=%@,%@&radius=%@&sensor=false&key=%@&opennow",self.searchText,type,lat,longt,radius,gKey];
         } else {
@@ -147,7 +166,7 @@
         
         int count = 0;
         [self.searchResults removeAllObjects];
-        self.searchText = searchBar.text;
+       
         for(NSDictionary *result in [res objectForKey:@"results"])
         {
             //NSDictionary *location = [[result objectForKey:@"geometry"] objectForKey:@"location"];
@@ -212,6 +231,34 @@
             [self sortOrderChanged];
         }
         
+        //Save to Recent Search List
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        NSString *key = @"recentsearch";
+        
+        NSArray *oldrecentList = [defaults stringArrayForKey:key];
+        appDelegate.recentSearches = [[NSMutableArray alloc] initWithArray:oldrecentList];
+        
+        BOOL strFound = FALSE;
+        for (NSString *str in appDelegate.recentSearches) {
+            if ([str isEqualToString:self.searchText]) {
+                strFound = TRUE;
+            }
+        }
+        
+        if (strFound == FALSE) { [appDelegate.recentSearches addObject:self.searchText]; }
+        
+        if ([appDelegate.recentSearches count] > 12)
+        {
+            [appDelegate.recentSearches removeObjectAtIndex:0];
+        }
+        
+        NSArray *value = appDelegate.recentSearches;
+        
+        [defaults setObject:value forKey:key];
+        [defaults synchronize];
+
  	}
     
 	//[self filterContent:searchText];
@@ -233,7 +280,7 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-	[self filterContent:searchText];
+	//[self filterContent:searchText];
 }
 
 
@@ -260,11 +307,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"SearchCell";
-    SearchCell *cell = (SearchCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+ 
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    UITableViewCell *retCell = nil;
     
     if ([self.searchResults count] > 0) {
+        
+        static NSString *CellIdentifier = @"SearchCell";
+        SearchCell *cell = (SearchCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         
         Place *place = [self.searchResults objectAtIndex:(long)indexPath.row];
         
@@ -393,39 +443,100 @@
             [operation start];
         }
         cell.rSoundLevel.image = place.iSound;
-        
+        retCell = cell;
         //[self.tableView reloadData];
+    } else {
+        static NSString *CellIdentifier = @"SearchPhraseCell";
+        SearchPhraseCell *cell = (SearchPhraseCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        NSString *phrase = [appDelegate.recentSearches objectAtIndex:(long)indexPath.row];
+        cell.phrase.text = phrase;
+        retCell= cell;
     }
+    UIView *myBackView = [[UIView alloc] initWithFrame:retCell.frame];
+    myBackView.backgroundColor = [UIColor lightGrayColor];
+    retCell.selectedBackgroundView = myBackView;
 
-    return cell;
+    return retCell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     NSInteger ret = 0;
 
-    if (self.searchResults != nil) {
+    if ([self.searchResults count] > 0) {
         ret = [self.searchResults count];
+    } else if ([appDelegate.recentSearches count]> 0) {
+        ret = [appDelegate.recentSearches count];
     }
     return ret;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80.;
+
+    CGFloat ret= 0.0;
+    if ([self.searchResults count] > 0) {
+        ret = self.rowHeight;
+    } else {
+        ret = 30.0;
+    }
+    return ret;
+}
+
+- (void)didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Do some stuff when the row is selected
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    if ([self.searchResults count] > 0) {
+        
+        ResultDetailsViewController *rvc = [[ResultDetailsViewController alloc] initWithNibName:@"ResultDetailsViewController" bundle:nil];
+        
+        Place *p = [self.searchResults objectAtIndex:indexPath.row];
+        rvc.place = p;
+        rvc.place.iPhoto = [UIImage imageWithData:UIImagePNGRepresentation(p.iPhoto)];
 
+        [[self navigationController] setNavigationBarHidden:NO animated:YES];
+        
+        //Save to Recent List
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [self.navigationController pushViewController:rvc animated:YES];
+        
+        NSString *key = @"recentlist";
+        
+        NSArray *oldrecentList = [defaults stringArrayForKey:key];
+        NSMutableArray *recentlist = [[NSMutableArray alloc] initWithArray:oldrecentList];
+        
+        [recentlist addObject:p.reference];
+        
+        if ([recentlist count] > 10)
+        {
+            [recentlist removeObjectAtIndex:0];
+        }
+        
+        NSArray *value = recentlist;
+        
+        [defaults setObject:value forKey:key];
+        [defaults synchronize];
+        
+ 
+    } else if ([appDelegate.recentSearches count] > 0) {
+        NSString *phrase = [appDelegate.recentSearches objectAtIndex:(long)indexPath.row];
+        self.searchBar.text = phrase;
+        [self searchBarSearchButtonClicked:self.searchBar];
+        [self didDeselectRowAtIndexPath:indexPath];
+    }
     
-    
-    ResultDetailsViewController *rvc = [[ResultDetailsViewController alloc] initWithNibName:@"ResultDetailsViewController" bundle:nil];
 
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
-    [self.navigationController pushViewController:rvc animated:YES];
+   
     
 
 }

@@ -14,9 +14,6 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="J6U-Ua-zRB">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="504" id="Rfd-kS-LJP"/>
-                                </constraints>
                                 <connections>
                                     <outlet property="dataSource" destination="SR5-ce-GqR" id="uL7-n0-uTJ"/>
                                     <outlet property="delegate" destination="SR5-ce-GqR" id="Uzg-1E-yYo"/>
@@ -24,7 +21,7 @@
                             </tableView>
                             <searchBar contentMode="redraw" verticalHuggingPriority="252" showsSearchResultsButton="YES" showsCancelButton="YES" showsScopeBar="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmH-fS-mle">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="88" id="cuR-ro-SBc"/>
+                                    <constraint firstAttribute="height" constant="50" type="user" id="cuR-ro-SBc"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
                                 <scopeButtonTitles>
@@ -34,26 +31,16 @@
                                     <outlet property="delegate" destination="SR5-ce-GqR" id="2uy-xW-Q9r"/>
                                 </connections>
                             </searchBar>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Open Now" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7x-0E-OX0">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="Pbf-Tc-agr"/>
-                                    <constraint firstAttribute="width" constant="81" id="rmz-GG-N5V"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="B7x-0E-OX0" firstAttribute="leading" secondItem="2qz-kw-vL6" secondAttribute="leading" constant="41" id="4Lb-dL-6Gx"/>
                             <constraint firstItem="J6U-Ua-zRB" firstAttribute="leading" secondItem="2qz-kw-vL6" secondAttribute="leading" type="default" id="8jk-hI-XHf"/>
                             <constraint firstItem="pmH-fS-mle" firstAttribute="trailing" secondItem="2qz-kw-vL6" secondAttribute="trailing" type="default" id="MT5-bU-1rT"/>
                             <constraint firstItem="pmH-fS-mle" firstAttribute="top" secondItem="2qz-kw-vL6" secondAttribute="top" type="default" id="Pw6-10-0ci"/>
                             <constraint firstItem="pmH-fS-mle" firstAttribute="leading" secondItem="2qz-kw-vL6" secondAttribute="leading" type="default" id="R2d-6J-EVQ"/>
                             <constraint firstItem="J6U-Ua-zRB" firstAttribute="top" secondItem="pmH-fS-mle" secondAttribute="bottom" type="default" id="YiE-pJ-PK1"/>
                             <constraint firstItem="J6U-Ua-zRB" firstAttribute="trailing" secondItem="2qz-kw-vL6" secondAttribute="trailing" type="default" id="hKY-Ye-6Mc"/>
-                            <constraint firstItem="B7x-0E-OX0" firstAttribute="top" secondItem="2qz-kw-vL6" secondAttribute="top" constant="68" id="sFj-rz-eLA"/>
+                            <constraint firstItem="J6U-Ua-zRB" firstAttribute="bottom" secondItem="2qz-kw-vL6" secondAttribute="bottom" type="default" id="zfD-7L-pvM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="HoW-Zo-KrQ">

@@ -18,7 +18,7 @@
 
 @implementation AppDelegate
 
-@synthesize locationManager=_locationManager, places;
+@synthesize locationManager=_locationManager, places, recentPlaces, recentSearches;
 
 -(void) loadLocaleFromAPI:(CLLocation *)location {
     

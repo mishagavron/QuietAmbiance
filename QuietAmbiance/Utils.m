@@ -34,7 +34,7 @@ static NSString *googleKey = @"AIzaSyC3G9bERz7ktJkqxvnnRx_Sb9ld8jKQErk";
 }
 
 +(NSString*) getTextSearchRadius {
-    return @"3000";
+    return @"5000";
 }
 +(CGFloat) getReviewHeaderMarginHeight {
     // if you change ReviewCell.xib for where review Y coordinate text starts, change it here as well

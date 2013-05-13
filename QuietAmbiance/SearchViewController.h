@@ -27,5 +27,6 @@
 
 @property (strong) NSMutableArray *searchResults;
 @property (strong) NSString *searchText;
+@property double rowHeight;
 
 @end
