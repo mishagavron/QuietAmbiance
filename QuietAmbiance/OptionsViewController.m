@@ -52,7 +52,7 @@
             cbv.checked = FALSE;
         }
     }
-    appDelegate.userPreferences.searchRadius = 500 * (cbvIn.tag + 1);
+    appDelegate.userPreferences.radiusChoice = cbvIn.tag;
 }
 
 - (void) checkBoxOpenNowChangedState:(SSCheckBoxView *)cbvIn
@@ -125,7 +125,7 @@
     for (int i = 0; i < 4; ++i) {
         SSCheckBoxViewStyle style = kSSCheckBoxViewStyleBox;
         BOOL checked;
-        if (appDelegate.userPreferences.searchRadius == 500*(i+1)) {
+        if (appDelegate.userPreferences.radiusChoice == i) {
             checked = TRUE;
         } else {
             checked = FALSE;

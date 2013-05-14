@@ -13,14 +13,15 @@
 
 @property BOOL openNow;
 @property double nearbyRadius;
-@property double searchRadius;
 @property BOOL searchTypeBar;
 @property BOOL searchTypeCafe;
 @property BOOL searchTypeRestaurant;
 @property BOOL onlyZagatListed;
 @property NSInteger sortOrder;
+@property NSInteger radiusChoice;
 
 - (void) initialize;
 - (NSString*) personilizeGoogleAPIURLString:(NSString*)input;
+- (double) getSearchRadius;
 
 @end
