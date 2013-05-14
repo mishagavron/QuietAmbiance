@@ -16,6 +16,8 @@
 @property (strong) NSMutableArray *cbRadius;
 
 @property (strong) SSCheckBoxView *cbOpenNow;
-
+@property (strong) SSCheckBoxView *cbRestaurants;
+@property (strong) SSCheckBoxView *cbCafes;
+@property (strong) SSCheckBoxView *cbBars;
 
 @end

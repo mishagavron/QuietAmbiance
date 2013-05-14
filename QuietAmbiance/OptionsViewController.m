@@ -16,7 +16,7 @@
 
 @implementation OptionsViewController
 
-@synthesize cbOpenNow, cbRadius, cbSort;
+@synthesize cbOpenNow, cbRadius, cbSort, cbBars, cbCafes, cbRestaurants;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,10 +33,8 @@
     // toggle all
     for (SSCheckBoxView *cbv in self.cbSort) {
         if (cbv.tag == cbvIn.tag) {
-            cbv.enabled = FALSE;
             cbv.checked = TRUE;
         } else {
-            cbv.enabled = TRUE;
             cbv.checked = FALSE;
         }
     }
@@ -49,10 +47,8 @@
     // toggle all
     for (SSCheckBoxView *cbv in self.cbRadius) {
         if (cbv.tag == cbvIn.tag) {
-            cbv.enabled = FALSE;
             cbv.checked = TRUE;
         } else {
-            cbv.enabled = TRUE;
             cbv.checked = FALSE;
         }
     }
@@ -63,9 +59,21 @@
 {
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.userPreferences.openNow = self.cbOpenNow.checked;
-    //cbvIn.checked = !cbvIn.checked;
-    
-
+}
+- (void) checkBoxRestaurantsChangedState:(SSCheckBoxView *)cbvIn
+{
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    appDelegate.userPreferences.searchTypeRestaurant = self.cbRestaurants.checked;
+}
+- (void) checkBoxCafesChangedState:(SSCheckBoxView *)cbvIn
+{
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    appDelegate.userPreferences.searchTypeCafe = self.cbCafes.checked;
+}
+- (void) checkBoxBarsChangedState:(SSCheckBoxView *)cbvIn
+{
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    appDelegate.userPreferences.searchTypeBar = self.cbBars.checked;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -106,8 +114,6 @@
                                                 style:style
                                                 checked:checked];
         cbs.tag = i;
-        if (checked) {[cbs setEnabled:FALSE];}
-        else {[cbs setEnabled:TRUE];}
         
         [cbs setStateChangedTarget:self selector:@selector(checkBoxSortChangedState:)];
         [self.view addSubview:cbs];
@@ -128,8 +134,6 @@
                                               style:style
                                             checked:checked];
         cbs.tag = i;
-        if (checked) {[cbs setEnabled:FALSE];}
-        else {[cbs setEnabled:TRUE];}
         
         [cbs setStateChangedTarget:self selector:@selector(checkBoxRadiusChangedState:)];
         [self.view addSubview:cbs];
@@ -137,7 +141,8 @@
         frame.origin.y += 25;
     }
 
-    frame = CGRectMake(105, 235, 21, 21);
+    //openNow
+    frame = CGRectMake(105, 257, 21, 21);
     SSCheckBoxViewStyle style = kSSCheckBoxViewStyleBox;
     BOOL checked;
     if (appDelegate.userPreferences.openNow) {
@@ -152,10 +157,51 @@
     [self.cbOpenNow setStateChangedTarget:self selector:@selector(checkBoxOpenNowChangedState:)];
     [self.view addSubview:self.cbOpenNow];
 
+    //typeRestaurants
+    frame = CGRectMake(105, 282, 21, 21);
+    if (appDelegate.userPreferences.searchTypeRestaurant) {
+        checked = TRUE;
+    } else {
+        checked = FALSE;
+    }
+    self.cbRestaurants = [[SSCheckBoxView alloc] initWithFrame:frame
+                                                     style:style
+                                                   checked:checked];
+    
+    [self.cbRestaurants setStateChangedTarget:self selector:@selector(checkBoxRestaurantsChangedState:)];
+    [self.view addSubview:self.cbRestaurants];
+    
+    //type Cafe
+    frame = CGRectMake(105, 307, 21, 21);
+    if (appDelegate.userPreferences.searchTypeCafe) {
+        checked = TRUE;
+    } else {
+        checked = FALSE;
+    }
+    self.cbCafes = [[SSCheckBoxView alloc] initWithFrame:frame
+                                                     style:style
+                                                   checked:checked];
+    
+    [self.cbCafes setStateChangedTarget:self selector:@selector(checkBoxCafesChangedState:)];
+    [self.view addSubview:self.cbCafes];
+    
+    //type Bars
+    frame = CGRectMake(105, 332, 21, 21);
+    if (appDelegate.userPreferences.searchTypeBar) {
+        checked = TRUE;
+    } else {
+        checked = FALSE;
+    }
+    self.cbBars = [[SSCheckBoxView alloc] initWithFrame:frame
+                                                     style:style
+                                                   checked:checked];
+    
+    [self.cbBars setStateChangedTarget:self selector:@selector(checkBoxBarsChangedState:)];
+    [self.view addSubview:self.cbBars];
+    
     
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
 
-    
 }
 
 - (void)didReceiveMemoryWarning
