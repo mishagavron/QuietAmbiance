@@ -15,10 +15,11 @@
 #import "AFJSONRequestOperation.h"
 #import "AFHTTPClient.h"
 #include "AFImageRequestOperation.h"
+#include "UserPreferences.h"
 
 @implementation AppDelegate
 
-@synthesize locationManager=_locationManager, places, recentPlaces, recentSearches;
+@synthesize locationManager=_locationManager, places, recentPlaces, recentSearches, userPreferences;
 
 -(void) loadLocaleFromAPI:(CLLocation *)location {
     
@@ -145,7 +146,19 @@
         //[self.currentLocation init];
     }
     
-
+    // load user options
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *key = @"options";
+    
+    NSData *myEncodedUserPreference = [defaults objectForKey:key];
+    self.userPreferences =  (UserPreferences *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedUserPreference];
+    
+    if (self.userPreferences == nil) {
+        self.userPreferences = [UserPreferences alloc];
+        [self.userPreferences initialize];
+    }
+    
     return YES;
 }
 							

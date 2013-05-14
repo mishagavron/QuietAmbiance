@@ -96,6 +96,7 @@
 		86DEC936173780230014027D /* SoundCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DEC935173780230014027D /* SoundCaptureViewController.m */; };
 		86DEC9381738AF230014027D /* shh_not_available.png in Resources */ = {isa = PBXBuildFile; fileRef = 86DEC9371738AF230014027D /* shh_not_available.png */; };
 		86FA090D17414D1A0097C027 /* TopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86FA090C17414D1A0097C027 /* TopViewController.m */; };
+		86FA09101741C8BB0097C027 /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86FA090F1741C8BB0097C027 /* OptionsViewController.m */; };
 		B58D8DBC1739828E00976852 /* RecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58D8DBB1739828E00976852 /* RecordCell.xib */; };
 		B58D8DBF1739829E00976852 /* RecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58D8DBE1739829E00976852 /* RecordCell.m */; };
 		B58D8E0E173D645B00976852 /* establishment.png in Resources */ = {isa = PBXBuildFile; fileRef = B58D8E0D173D645B00976852 /* establishment.png */; };
@@ -242,6 +243,8 @@
 		86DEC9371738AF230014027D /* shh_not_available.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shh_not_available.png; sourceTree = "<group>"; };
 		86FA090B17414D1A0097C027 /* TopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopViewController.h; sourceTree = "<group>"; };
 		86FA090C17414D1A0097C027 /* TopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopViewController.m; sourceTree = "<group>"; };
+		86FA090E1741C8BB0097C027 /* OptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
+		86FA090F1741C8BB0097C027 /* OptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
 		B58D8DBB1739828E00976852 /* RecordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordCell.xib; sourceTree = SOURCE_ROOT; };
 		B58D8DBD1739829E00976852 /* RecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordCell.h; sourceTree = "<group>"; };
 		B58D8DBE1739829E00976852 /* RecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordCell.m; sourceTree = "<group>"; };
@@ -366,6 +369,8 @@
 				86DEC935173780230014027D /* SoundCaptureViewController.m */,
 				86DEC9281736F8490014027D /* UserPreferences.h */,
 				86DEC9291736F8490014027D /* UserPreferences.m */,
+				86FA090E1741C8BB0097C027 /* OptionsViewController.h */,
+				86FA090F1741C8BB0097C027 /* OptionsViewController.m */,
 				86C1819A1724BBE50037389D /* Utils.h */,
 				86C1819B1724BBE50037389D /* Utils.m */,
 				86C181831724AEF90037389D /* Place.h */,
@@ -646,6 +651,7 @@
 				86AEB501173ED81F009CE69D /* UIHelpers.m in Sources */,
 				86AEB52E17409247009CE69D /* SearchPhraseCell.m in Sources */,
 				86FA090D17414D1A0097C027 /* TopViewController.m in Sources */,
+				86FA09101741C8BB0097C027 /* OptionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

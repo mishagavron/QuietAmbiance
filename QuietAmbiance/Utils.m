@@ -29,8 +29,8 @@ static NSString *googleKey = @"AIzaSyC3G9bERz7ktJkqxvnnRx_Sb9ld8jKQErk";
     
 }
 
-+(NSString*) getSearchRadius {
-    return @"250";
++(NSString*) getSearchRadiusForCapture {
+    return @"50";
 }
 
 +(NSString*) getTextSearchRadius {
