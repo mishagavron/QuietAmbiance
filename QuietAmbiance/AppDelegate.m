@@ -77,7 +77,8 @@
     if (abs(howRecent) < 15.0)
     {
         //Location timestamp is within the last 15.0 seconds, let's use it!
-        if(newLocation.horizontalAccuracy<35.0){
+        //NSLog(@"Horizonatal Accuracy %f",newLocation.horizontalAccuracy);
+        if(newLocation.horizontalAccuracy<100.0 && newLocation.verticalAccuracy<100.0){
             //Location seems pretty accurate, let's use it!
             NSLog(@"latitude %+.6f, longitude %+.6f\n",
                   newLocation.coordinate.latitude,
