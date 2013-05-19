@@ -97,6 +97,10 @@
         [msgc setMessage:@"You must enable Location Services to use this app."];
         [self.navigationController setNavigationBarHidden:YES animated:YES];
         [self.navigationController pushViewController:msgc animated:YES];
+        
+        [appDelegate.locationManager stopUpdatingLocation];
+        [appDelegate.locationManager startUpdatingLocation];
+        
         return;
     }
 

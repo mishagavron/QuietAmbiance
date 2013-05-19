@@ -20,4 +20,6 @@
 @property (strong) SSCheckBoxView *cbCafes;
 @property (strong) SSCheckBoxView *cbBars;
 
+- (void) emptyPlacesArray;
+
 @end

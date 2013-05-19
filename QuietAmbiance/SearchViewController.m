@@ -258,6 +258,8 @@
         
         [defaults setObject:value forKey:key];
         [defaults synchronize];
+        
+        [self.tableView reloadData];
 
  	}
     

@@ -41,6 +41,13 @@
     appDelegate.userPreferences.sortOrder = cbvIn.tag;
 }
 
+- (void) emptyPlacesArray {
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    if (appDelegate.places != nil) {
+        [appDelegate.places removeAllObjects];
+    }
+}
+
 - (void) checkBoxRadiusChangedState:(SSCheckBoxView *)cbvIn
 {
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -53,27 +60,35 @@
         }
     }
     appDelegate.userPreferences.radiusChoice = cbvIn.tag;
+    //Need to reload from API, so clear places array
+    [self emptyPlacesArray];
 }
 
 - (void) checkBoxOpenNowChangedState:(SSCheckBoxView *)cbvIn
 {
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.userPreferences.openNow = self.cbOpenNow.checked;
+    //Need to reload from API, so clear places array
+    [self emptyPlacesArray];
 }
 - (void) checkBoxRestaurantsChangedState:(SSCheckBoxView *)cbvIn
 {
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.userPreferences.searchTypeRestaurant = self.cbRestaurants.checked;
+    //Need to reload from API, so clear places array
+    [self emptyPlacesArray];
 }
 - (void) checkBoxCafesChangedState:(SSCheckBoxView *)cbvIn
 {
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.userPreferences.searchTypeCafe = self.cbCafes.checked;
+    [self emptyPlacesArray];
 }
 - (void) checkBoxBarsChangedState:(SSCheckBoxView *)cbvIn
 {
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.userPreferences.searchTypeBar = self.cbBars.checked;
+    [self emptyPlacesArray];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

@@ -123,7 +123,7 @@
         _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
         
         //The distance in meters a device must move before an update event is triggered
-        _locationManager.distanceFilter=50;
+        _locationManager.distanceFilter=10;
         self.locationManager=_locationManager;
     
         if (self.currentLocation == nil){
