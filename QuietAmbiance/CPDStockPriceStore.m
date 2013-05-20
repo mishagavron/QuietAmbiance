@@ -108,26 +108,13 @@ NSString * CPDTickerSymbolMSFT       = @"MSFT";
     if (!dates)
     {
         dates = [NSArray arrayWithObjects:
-                 @"2", 
-                 @"3", 
-                 @"4",
-                 @"5",
-                 @"9", 
-                 @"10", 
-                 @"11",
-                 @"12", 
-                 @"13",
-                 @"16", 
-                 @"17", 
-                 @"18",
-                 @"19", 
-                 @"20", 
-                 @"23", 
-                 @"24", 
-                 @"25",
-                 @"26", 
-                 @"27",
-                 @"30",                   
+                 @"Mon",
+                 @"Tue",
+                 @"Wed",
+                 @"Thu",
+                 @"Fri",
+                 @"Sat",
+                 @"Sun",                   
                  nil];
     }
     return dates;

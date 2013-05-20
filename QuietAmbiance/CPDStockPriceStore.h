@@ -14,10 +14,10 @@
 
 - (NSArray *)dailyPortfolioPrices;
 
-- (NSArray *)datesInWeek;
+//- (NSArray *)datesInWeek;
 - (NSArray *)weeklyPrices:(NSString *)tickerSymbol;
 
-- (NSArray *)datesInMonth;
+//- (NSArray *)datesInMonth;
 - (NSArray *)monthlyPrices:(NSString *)tickerSymbol;
 
 @end

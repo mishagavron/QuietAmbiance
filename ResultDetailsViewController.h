@@ -14,6 +14,9 @@
 #import "CorePlot-CocoaTouch.h"
 
 @interface ResultDetailsViewController : UIViewController <CPTPlotDataSource>
+{
+    NSMutableArray *soundperday;
+}
 
 @property (weak)IBOutlet UILabel *lName;
 @property (weak)IBOutlet UILabel *lPhone;
@@ -41,6 +44,7 @@
 
 
 @property CGFloat viewTotalHeight;
+
 
 
 @property (nonatomic, strong) CPTGraphHostingView *hostView;
