@@ -442,6 +442,17 @@ static NSArray *dates = nil;
             [soundperday addObject:[res objectForKey:@"Sunday"]];
             
             NSLog(@"soundperday: %@", soundperday);
+            
+            if (soundperday == nil || soundperday.count == 0)
+            {
+                [soundperday addObject:sampleavg];
+                [soundperday addObject:sampleavg];
+                [soundperday addObject:sampleavg];
+                [soundperday addObject:sampleavg];
+                [soundperday addObject:sampleavg];
+                [soundperday addObject:sampleavg];
+                [soundperday addObject:sampleavg];
+            }
        
             //NSString *beatid = [res valueForKeyPath:@"Beat.BeatId"];
             
@@ -449,7 +460,14 @@ static NSArray *dates = nil;
             
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
             NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
-            place.iSound = [UIImage imageNamed:@"shh_not_available.png"];
+            
+            [soundperday addObject:@"0"];
+            [soundperday addObject:@"0"];
+            [soundperday addObject:@"0"];
+            [soundperday addObject:@"0"];
+            [soundperday addObject:@"0"];
+            [soundperday addObject:@"0"];
+            [soundperday addObject:@"0"];
         }];
         
         
