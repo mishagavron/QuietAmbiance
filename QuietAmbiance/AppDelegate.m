@@ -15,10 +15,11 @@
 #import "AFJSONRequestOperation.h"
 #import "AFHTTPClient.h"
 #include "AFImageRequestOperation.h"
+#include "UserPreferences.h"
 
 @implementation AppDelegate
 
-@synthesize locationManager=_locationManager, places, recentPlaces, recentSearches;
+@synthesize locationManager=_locationManager, places, recentPlaces, recentSearches, userPreferences;
 
 -(void) loadLocaleFromAPI:(CLLocation *)location {
     
@@ -76,7 +77,8 @@
     if (abs(howRecent) < 15.0)
     {
         //Location timestamp is within the last 15.0 seconds, let's use it!
-        if(newLocation.horizontalAccuracy<35.0){
+        //NSLog(@"Horizonatal Accuracy %f",newLocation.horizontalAccuracy);
+        if(newLocation.horizontalAccuracy<100.0 && newLocation.verticalAccuracy<100.0){
             //Location seems pretty accurate, let's use it!
             NSLog(@"latitude %+.6f, longitude %+.6f\n",
                   newLocation.coordinate.latitude,
@@ -122,7 +124,7 @@
         _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
         
         //The distance in meters a device must move before an update event is triggered
-        _locationManager.distanceFilter=50;
+        _locationManager.distanceFilter=10;
         self.locationManager=_locationManager;
     
         if (self.currentLocation == nil){
@@ -145,7 +147,19 @@
         //[self.currentLocation init];
     }
     
-
+    // load user options
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *key = @"options";
+    
+    NSData *myEncodedUserPreference = [defaults objectForKey:key];
+    self.userPreferences =  (UserPreferences *)[NSKeyedUnarchiver unarchiveObjectWithData: myEncodedUserPreference];
+    
+    if (self.userPreferences == nil) {
+        self.userPreferences = [UserPreferences alloc];
+        [self.userPreferences initialize];
+    }
+    
     return YES;
 }
 							

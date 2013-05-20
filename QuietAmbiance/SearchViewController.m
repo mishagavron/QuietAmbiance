@@ -68,6 +68,7 @@
     self.rowHeight = 80.;
     self.searchBar.text = @"";
     self.searchResults = [[NSMutableArray alloc] init];
+    self.sortControl.selectedSegmentIndex = appDelegate.userPreferences.sortOrder;
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -101,7 +102,7 @@
     [self.myView addSubview:self.checkBox];
      */
     
-    
+    //[self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -125,17 +126,15 @@
         NSString *lat = [NSString stringWithFormat:@"%f", appDelegate.currentLocation.lattitude];
         NSString *longt = [NSString stringWithFormat:@"%f", appDelegate.currentLocation.longitude];
         NSString *gKey = [Utils getKey];
-        NSString *radius = [Utils getTextSearchRadius];
-        NSString *type = [Utils getSearchType];
+        //NSString *radius = [Utils getTextSearchRadius];
+        //NSString *type = [Utils getSearchType];
         
-        NSString *placeString  = nil;
         self.searchText = searchBar.text;
-        if (self.checkBox.checked == TRUE) {
-            placeString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=%@&types=%@&location=%@,%@&radius=%@&sensor=false&key=%@&opennow",self.searchText,type,lat,longt,radius,gKey];
-        } else {
-            placeString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=%@&types=%@&location=%@,%@&radius=%@&sensor=false&key=%@",self.searchText,type,lat,longt,radius,gKey];
-        }
-        placeString = [UserPreferences personilizeGoogleAPIURLString:placeString];
+        NSString *placeString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=%@&location=%@,%@&sensor=false&key=%@",self.searchText,lat,longt,gKey];
+        
+    
+        placeString = [appDelegate.userPreferences personilizeGoogleAPIURLString:placeString];
+        //placeString = [Utils personilizeGoogleAPIURLString:placeString];
         NSLog(@"request string: %@",placeString);
         
         NSURL *placeURL = [NSURL URLWithString:placeString];
@@ -228,6 +227,7 @@
         }
         
         if ([self.searchResults count] > 0) {
+            self.sortControl.selectedSegmentIndex = appDelegate.userPreferences.sortOrder;
             [self sortOrderChanged];
         }
         
@@ -258,6 +258,8 @@
         
         [defaults setObject:value forKey:key];
         [defaults synchronize];
+        
+        [self.tableView reloadData];
 
  	}
     
@@ -485,11 +487,6 @@
     return ret;
 }
 
-- (void)didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Do some stuff when the row is selected
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -541,13 +538,13 @@
         NSString *phrase = [appDelegate.recentSearches objectAtIndex:(long)indexPath.row];
         self.searchBar.text = phrase;
         [self searchBarSearchButtonClicked:self.searchBar];
-        [self didDeselectRowAtIndexPath:indexPath];
+        //[self didDeselectRowAtIndexPath:indexPath];
     }
     
 
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
    
-    
+    [self.tableView reloadData]; 
 
 }
 
@@ -560,6 +557,8 @@
 
 -(IBAction) sortOrderChanged {
   
+    if (self.sortControl.selectedSegmentIndex <0) return;
+    
     NSArray *mySortDescriptors = nil;
     if (self.sortControl.selectedSegmentIndex == 0) { //Quiet
         

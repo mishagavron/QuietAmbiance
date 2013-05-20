@@ -97,6 +97,10 @@
         [msgc setMessage:@"You must enable Location Services to use this app."];
         [self.navigationController setNavigationBarHidden:YES animated:YES];
         [self.navigationController pushViewController:msgc animated:YES];
+        
+        [appDelegate.locationManager stopUpdatingLocation];
+        [appDelegate.locationManager startUpdatingLocation];
+        
         return;
     }
 
@@ -114,11 +118,11 @@
     NSString *lat = [NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude];
     NSString *longt = [NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude];
     NSString *gKey = [Utils getKey];
-    NSString *radius = [Utils getSearchRadius];
+    NSString *radius = [Utils getSearchRadiusForCapture];
     NSString *type = [Utils getSearchType];
     
     NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?opennow&types=%@&name=&location=%@,%@&radius=%@&sensor=false&key=%@",type,lat,longt,radius,gKey];
-    placeString = [UserPreferences personilizeGoogleAPIURLString:placeString];
+    //placeString = [UserPreferences personilizeGoogleAPIURLString:placeString];
     NSLog(@"request string: %@",placeString);
     
     NSURL *placeURL = [NSURL URLWithString:placeString];

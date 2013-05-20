@@ -10,6 +10,7 @@
 //Add Location Framework
 #import <CoreLocation/CoreLocation.h>
 #import "Location.h"
+#import "UserPreferences.h"
 
 typedef enum {
     
@@ -31,6 +32,8 @@ typedef enum {
 @property (strong) NSMutableArray *recentPlaces;
 
 @property (strong) NSMutableArray *recentSearches;
+
+@property (strong) UserPreferences *userPreferences;
 
 @property LocationType locationState;
 

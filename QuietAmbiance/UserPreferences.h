@@ -8,9 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface UserPreferences : NSObject
 
+@property BOOL openNow;
+@property double nearbyRadius;
+@property BOOL searchTypeBar;
+@property BOOL searchTypeCafe;
+@property BOOL searchTypeRestaurant;
+@property BOOL onlyZagatListed;
+@property NSInteger sortOrder;
+@property NSInteger radiusChoice;
 
-+ (NSString*) personilizeGoogleAPIURLString:(NSString*)input;
+- (void) initialize;
+- (NSString*) personilizeGoogleAPIURLString:(NSString*)input;
+- (double) getSearchRadius;
 
 @end

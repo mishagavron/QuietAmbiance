@@ -42,6 +42,7 @@
     [self.refreshControl addTarget:self action:@selector(refreshTable:) forControlEvents:UIControlEventValueChanged];
     
     self.rowHeight = 80.0;
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
     [self loadPlaces];
     
 
@@ -325,7 +326,7 @@
     rvc.place.iPhoto = [UIImage imageWithData:UIImagePNGRepresentation(p.iPhoto)];
     //AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     //[[NSBundle mainBundle] loadNibNamed:@"ResultDetailsViewController" owner:self options:nil];
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+ 
     [self.navigationController pushViewController:rvc animated:YES];
 }
 
