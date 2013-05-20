@@ -17,8 +17,6 @@
 #import "AFJSONRequestOperation.h"
 #import "AFHTTPClient.h"
 
-#import "CPDStockPriceStore.h"
-
 #import "CorePlot-CocoaTouch.h"
 
 #include "AFImageRequestOperation.h"
