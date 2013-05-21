@@ -37,14 +37,14 @@
 {
     [super viewDidLoad];
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultCell" bundle:nil] forCellReuseIdentifier:@"ResultCell"];
-    
+    //AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     //UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshTable:) forControlEvents:UIControlEventValueChanged];
     
     self.rowHeight = 80.0;
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
     [self loadPlaces];
-    
+    [self.tableView reloadData];
 
 }
 

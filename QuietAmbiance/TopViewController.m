@@ -7,6 +7,7 @@
 //
 
 #import "TopViewController.h"
+#import "AppDelegate.h"
 
 @interface TopViewController ()
 
@@ -39,6 +40,26 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    //AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    //UIViewController *destView = [self navigationController];
+    //UIViewController *destView = self;
+
+    
+    if ([segue.identifier isEqualToString:@"pushNearby"]) {
+        
+    } else if ([segue.identifier isEqualToString:@"pushRecent"]) {
+        
+    } else if ([segue.identifier isEqualToString:@"pushCapture"]) {
+         
+    } else if ([segue.identifier isEqualToString:@"pushOptions"]) {
+        //[NSThread detachNewThreadSelector:@selector(threadStartAnimating:) toTarget:self withObject:nil];
+    
+    }
+    //NSLog(@"Activity indicator is activated %d", [appDelegate.spinner isAnimating]);
 }
 
 @end

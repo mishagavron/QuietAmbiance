@@ -18,7 +18,7 @@
                                     <constraint firstAttribute="height" constant="490" id="Tyy-R4-9Bh"/>
                                 </constraints>
                                 <searchBar key="tableHeaderView" contentMode="redraw" verticalHuggingPriority="252" showsSearchResultsButton="YES" showsCancelButton="YES" id="pmH-fS-mle">
-                                    <rect key="frame" x="0.0" y="446" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <scopeButtonTitles>
                                         <string></string>
@@ -286,6 +286,7 @@
         <!--Nearby List View Controller-->
         <scene sceneID="GVW-s9-SlN">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZZO-xU-z3f" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="o2f-Ha-LMH" customClass="NearbyListViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="LMH-pN-ckA">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
@@ -321,7 +322,6 @@
                         <outlet property="sortControl" destination="NlT-Mh-Xhi" id="9FL-5Z-pKT"/>
                     </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZZO-xU-z3f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4005" y="-1379"/>
         </scene>
@@ -346,7 +346,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="o2f-Ha-LMH" kind="push" id="PIJ-G5-g8F"/>
+                                    <segue destination="o2f-Ha-LMH" kind="push" identifier="pushNearby" id="PIJ-G5-g8F"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xmv-wd-1Tm">
@@ -359,7 +359,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="apj-4K-K5n" kind="push" id="ZHf-LA-cq9"/>
+                                    <segue destination="apj-4K-K5n" kind="push" identifier="pushRecent" id="ZHf-LA-cq9"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JcK-zc-vCJ">
@@ -375,7 +375,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="BhK-ba-ydi" kind="push" id="JH3-Pp-ooQ"/>
+                                    <segue destination="BhK-ba-ydi" kind="push" identifier="pushCapture" id="JH3-Pp-ooQ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cmB-IB-6pc">
@@ -401,7 +401,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="dpH-Tx-c8f" kind="push" id="fM5-u4-PpQ"/>
+                                    <segue destination="dpH-Tx-c8f" kind="push" identifier="pushOptions" id="fM5-u4-PpQ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -412,7 +412,6 @@
                             <constraint firstItem="xmv-wd-1Tm" firstAttribute="trailing" secondItem="hTg-RL-CVC" secondAttribute="trailing" type="default" id="5ku-LJ-kMM"/>
                             <constraint firstItem="hTg-RL-CVC" firstAttribute="leading" secondItem="xmv-wd-1Tm" secondAttribute="leading" type="default" id="CEV-ej-Qjm"/>
                             <constraint firstItem="xmv-wd-1Tm" firstAttribute="leading" secondItem="ANd-x5-Z6M" secondAttribute="leading" type="default" id="L1t-9t-5hY"/>
-                            <constraint firstItem="cmB-IB-6pc" firstAttribute="top" secondItem="hTg-RL-CVC" secondAttribute="top" type="default" id="UFb-NH-Qm1"/>
                             <constraint firstAttribute="trailing" secondItem="JcK-zc-vCJ" secondAttribute="trailing" constant="33" id="UOS-qD-sgt"/>
                             <constraint firstItem="xmv-wd-1Tm" firstAttribute="trailing" secondItem="ANd-x5-Z6M" secondAttribute="trailing" type="default" id="Zyy-uT-A76"/>
                             <constraint firstItem="hTg-RL-CVC" firstAttribute="leading" secondItem="YcV-WY-Yk5" secondAttribute="leading" constant="31" id="mm8-rK-DJC"/>
@@ -447,44 +446,6 @@
             <point key="canvasLocation" x="2931" y="-1089"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="NearbyListViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NearbyListViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sortOrderChanged"/>
-                <relationship kind="outlet" name="sortControl" candidateClass="UISegmentedControl"/>
-            </relationships>
-        </class>
-        <class className="OptionsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/OptionsViewController.h"/>
-        </class>
-        <class className="RecentListViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RecentListViewController.h"/>
-        </class>
-        <class className="SearchViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SearchViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sortOrderChanged"/>
-                <relationship kind="outlet" name="myView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="sliderControl" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="sortControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="SoundCaptureViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SoundCaptureViewController.h"/>
-        </class>
-        <class className="TopViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TopViewController.h"/>
-        </class>
-        <class className="UIRefreshControl" superclassName="UIControl">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIRefreshControl.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

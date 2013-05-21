@@ -39,7 +39,7 @@ typedef enum {
     [coder encodeBool:self.searchTypeRestaurant forKey:@"searchTypeRestaurant"];
     [coder encodeBool:self.onlyZagatListed forKey:@"onlyZagatListed"];
     [coder encodeInteger:self.sortOrder forKey:@"sortOrder"];
-    [coder encodeInteger:self.radiusChoice forKey:@"radiusChice"];
+    [coder encodeInteger:self.radiusChoice forKey:@"radiusChoice"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder {

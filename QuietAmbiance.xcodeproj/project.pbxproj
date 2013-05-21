@@ -17,6 +17,8 @@
 		86377273173DA8AD0064639D /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86377271173DA8AD0064639D /* MessageViewController.xib */; };
 		86377277173DA8C40064639D /* SearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 86377275173DA8C40064639D /* SearchCell.m */; };
 		86377278173DA8C40064639D /* SearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86377276173DA8C40064639D /* SearchCell.xib */; };
+		86986989174AAC52004C603D /* ActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86986988174AAC52004C603D /* ActivityViewController.xib */; };
+		8698698C174AAC99004C603D /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698698B174AAC99004C603D /* ActivityViewController.m */; };
 		86A1F46E1732DFD60032B3A4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86A1F46D1732DFD60032B3A4 /* MapKit.framework */; };
 		86A1F476173346540032B3A4 /* no_author_pic.png in Resources */ = {isa = PBXBuildFile; fileRef = 86A1F475173346540032B3A4 /* no_author_pic.png */; };
 		86A1F47817342DF40032B3A4 /* ReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86A1F47717342DF40032B3A4 /* ReviewCell.xib */; };
@@ -135,6 +137,9 @@
 		86377274173DA8C40064639D /* SearchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCell.h; sourceTree = "<group>"; };
 		86377275173DA8C40064639D /* SearchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCell.m; sourceTree = "<group>"; };
 		86377276173DA8C40064639D /* SearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchCell.xib; sourceTree = "<group>"; };
+		86986988174AAC52004C603D /* ActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityViewController.xib; sourceTree = "<group>"; };
+		8698698A174AAC98004C603D /* ActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewController.h; sourceTree = "<group>"; };
+		8698698B174AAC99004C603D /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController.m; sourceTree = "<group>"; };
 		86A1F46D1732DFD60032B3A4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		86A1F475173346540032B3A4 /* no_author_pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_author_pic.png; sourceTree = "<group>"; };
 		86A1F47717342DF40032B3A4 /* ReviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReviewCell.xib; sourceTree = "<group>"; };
@@ -362,6 +367,9 @@
 				86AEB52A1740915A009CE69D /* SearchPhraseCell.xib */,
 				86AEB52C17409247009CE69D /* SearchPhraseCell.h */,
 				86AEB52D17409247009CE69D /* SearchPhraseCell.m */,
+				8698698A174AAC98004C603D /* ActivityViewController.h */,
+				8698698B174AAC99004C603D /* ActivityViewController.m */,
+				86986988174AAC52004C603D /* ActivityViewController.xib */,
 				8637726F173DA8AD0064639D /* MessageViewController.h */,
 				86377270173DA8AD0064639D /* MessageViewController.m */,
 				86377271173DA8AD0064639D /* MessageViewController.xib */,
@@ -610,6 +618,7 @@
 				86AEB528173EE001009CE69D /* cb_box_on@2x.png in Resources */,
 				86AEB529173EE001009CE69D /* cb_dark_off.png in Resources */,
 				86AEB52B1740915A009CE69D /* SearchPhraseCell.xib in Resources */,
+				86986989174AAC52004C603D /* ActivityViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +661,7 @@
 				86AEB52E17409247009CE69D /* SearchPhraseCell.m in Sources */,
 				86FA090D17414D1A0097C027 /* TopViewController.m in Sources */,
 				86FA09101741C8BB0097C027 /* OptionsViewController.m in Sources */,
+				8698698C174AAC99004C603D /* ActivityViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

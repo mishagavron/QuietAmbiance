@@ -109,7 +109,7 @@
     [super viewDidLoad];
     
 	// Do any additional setup after loading the view.
-    
+    //[NSThread sleepForTimeInterval:5.];
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
 
     self.cbSort = [[NSMutableArray alloc] initWithCapacity:4];

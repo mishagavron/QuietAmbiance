@@ -49,24 +49,26 @@
 {
     [super viewDidLoad];
     [self.tableView registerNib:[UINib nibWithNibName:@"RecordCell" bundle:nil] forCellReuseIdentifier:@"RecordCell"];
-    
+    //AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+
     //UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshTable:) forControlEvents:UIControlEventValueChanged];
     
     self.rowHeight = 50.0;
     [self loadPlaces];
+    [self.tableView reloadData];
 }
 
 -(void) viewWillAppear:(BOOL)flag {
     
     [super viewWillAppear:flag];
     
-    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    //AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
 
-    if (([appDelegate.places count] == 0) && (appDelegate.locationState == Defined)) {
-        [self loadPlaces];
-        [self.tableView reloadData];
-    }
+    //if (([appDelegate.places count] == 0) && (appDelegate.locationState == Defined)) {
+    //    [self loadPlaces];
+    //    [self.tableView reloadData];
+    //}
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 

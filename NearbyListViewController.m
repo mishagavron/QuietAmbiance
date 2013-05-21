@@ -26,8 +26,6 @@
 
 @implementation NearbyListViewController
 
-//@synthesize places;
-
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -42,13 +40,15 @@
 
     [super viewDidLoad];
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultCell" bundle:nil] forCellReuseIdentifier:@"ResultCell"];
-    
+    //AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     //UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshTable:) forControlEvents:UIControlEventValueChanged];
-    
+
+    //[NSThread sleepForTimeInterval:5.0];
     self.rowHeight = 80.0;
     [self loadPlaces];
-    
+    [self.tableView reloadData];
+
 }
 
 
@@ -56,19 +56,20 @@
     
     [super viewWillAppear:flag];
     
-    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    //AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
  
-    if (([appDelegate.places count] == 0) && (appDelegate.locationState == Defined)) {
-        [self loadPlaces];
-        [self.tableView reloadData];
-    }
-       [[self navigationController] setNavigationBarHidden:NO animated:YES];
+    //if (([appDelegate.places count] == 0) && (appDelegate.locationState == Defined)) {
+    //    [self loadPlaces];
+        
+    //}
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 
 
 -(void) refreshTable:(UIRefreshControl *)refresh {
     AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     [appDelegate.places removeAllObjects];
+   
     [self loadPlaces];
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
@@ -98,6 +99,7 @@
     CLLocation *currentLocation=appDelegate.locationManager.location;
     
     if ([appDelegate.places count] >0) return;  // no need to reload from API
+    
     
     NSString *lat = [NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude];
     NSString *longt = [NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude];
@@ -188,6 +190,7 @@
         [appDelegate.places addObject:place];
         count++;
     }
+    
     if (([appDelegate.places count] == 0) && (appDelegate.locationState == Defined)) {
         
         MessageViewController *msgc = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
