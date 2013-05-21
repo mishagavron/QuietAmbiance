@@ -98,97 +98,98 @@
     }
     CLLocation *currentLocation=appDelegate.locationManager.location;
     
-    if ([appDelegate.places count] >0) return;  // no need to reload from API
+    if ([appDelegate.places count] == 0) {  // reload from API only when necessary
     
-    
-    NSString *lat = [NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude];
-    NSString *longt = [NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude];
-    NSString *gKey = [Utils getKey];
-    //NSString *radius = [Utils getSearchRadius];
-    //NSString *type = [Utils getSearchType];
-    
-    NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&sensor=false&key=%@",lat,longt,gKey];
-    
-    placeString = [appDelegate.userPreferences personilizeGoogleAPIURLString:placeString];
-    NSLog(@"request string: %@",placeString);
-    
-    NSURL *placeURL = [NSURL URLWithString:placeString];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    
-    [request setHTTPMethod:@"GET"];
-    [request setURL:placeURL];
-    //NSURLResponse* response;
-    //NSError* error = nil;
-    
-    NSError *error = [[NSError alloc] init];
-    NSHTTPURLResponse *responseCode = nil;
-    NSData *JSON;
-    JSON = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
-    
-    if([responseCode statusCode] != 200){
-        NSLog(@"Error getting %@, HTTP status code %i", placeString, [responseCode statusCode]);
-        return;
-    }
- 
-    NSDictionary *res =[NSJSONSerialization
-                              JSONObjectWithData:JSON
-                              options:NSJSONReadingMutableLeaves
-                              error:nil];
         
-    [appDelegate.places removeAllObjects];
-    CLLocation *locA = [[CLLocation alloc] initWithLatitude:appDelegate.currentLocation.lattitude longitude:appDelegate.currentLocation.longitude];
-
-    int count = 0;
-    for(NSDictionary *result in [res objectForKey:@"results"])
-    {
-        //NSDictionary *location = [[result objectForKey:@"geometry"] objectForKey:@"location"];
-        Place *place = [[Place alloc] init];
-        NSString *name = [result objectForKey:@"name"];
-        NSString *photo_ref = @"";
-            
-            
-        NSString *reference = [result objectForKey:@"reference"];
-        NSString *rating = [result objectForKey:@"rating"];
-        NSString *price_level = [result objectForKey:@"price_level"];
-        NSString *icon = [result objectForKey:@"icon"];
-        NSString *place_id = [result objectForKey:@"id"];
-        NSString *vicinity = [result objectForKey:@"vicinity"];
-        place.name = name;
-        place.reference = reference;
-        place.rating = rating;
-        place.ratingNum = [rating doubleValue];
-        place.price_level = price_level;
-        place.priceNum = [price_level doubleValue];
-        place.soundNum = (double)count;
-        place.icon = icon;
-        place.place_id = place_id;
-        place.vicinity = vicinity;
-            
-        for (NSDictionary *photos in [result objectForKey:@"photos"]) {
-            photo_ref = [photos objectForKey:@"photo_reference"];
+        NSString *lat = [NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude];
+        NSString *longt = [NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude];
+        NSString *gKey = [Utils getKey];
+        //NSString *radius = [Utils getSearchRadius];
+        //NSString *type = [Utils getSearchType];
+        
+        NSString *placeString  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&sensor=false&key=%@",lat,longt,gKey];
+        
+        placeString = [appDelegate.userPreferences personilizeGoogleAPIURLString:placeString];
+        NSLog(@"request string: %@",placeString);
+        
+        NSURL *placeURL = [NSURL URLWithString:placeString];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        
+        [request setHTTPMethod:@"GET"];
+        [request setURL:placeURL];
+        //NSURLResponse* response;
+        //NSError* error = nil;
+        
+        NSError *error = [[NSError alloc] init];
+        NSHTTPURLResponse *responseCode = nil;
+        NSData *JSON;
+        JSON = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+        
+        if([responseCode statusCode] != 200){
+            NSLog(@"Error getting %@, HTTP status code %i", placeString, [responseCode statusCode]);
+            return;
         }
-            
-            
-        NSDictionary *geo = [result objectForKey:@"geometry"];
-        NSDictionary *locs = [geo objectForKey:@"location"];
-            
-            
-        NSString *lat = [locs objectForKey:@"lat"];
-        NSString *lng = [locs objectForKey:@"lng"];
-        double latD = [lat doubleValue];
-        double longtD = [lng doubleValue];
-        CLLocation *locB = [[CLLocation alloc] initWithLatitude:latD longitude:longtD];
-        place.distanceNumMeters = [Utils distanceInMeters:locA To:locB];
-            
-        place.lattitude = lat;
-        place.longitude = lng;
         
+        NSDictionary *res =[NSJSONSerialization
+                            JSONObjectWithData:JSON
+                            options:NSJSONReadingMutableLeaves
+                            error:nil];
         
-        place.reference_photo = photo_ref;
+        [appDelegate.places removeAllObjects];
+        CLLocation *locA = [[CLLocation alloc] initWithLatitude:appDelegate.currentLocation.lattitude longitude:appDelegate.currentLocation.longitude];
         
-        //NSLog(@"name: %@", name);
-        [appDelegate.places addObject:place];
-        count++;
+        int count = 0;
+        for(NSDictionary *result in [res objectForKey:@"results"])
+        {
+            //NSDictionary *location = [[result objectForKey:@"geometry"] objectForKey:@"location"];
+            Place *place = [[Place alloc] init];
+            NSString *name = [result objectForKey:@"name"];
+            NSString *photo_ref = @"";
+            
+            
+            NSString *reference = [result objectForKey:@"reference"];
+            NSString *rating = [result objectForKey:@"rating"];
+            NSString *price_level = [result objectForKey:@"price_level"];
+            NSString *icon = [result objectForKey:@"icon"];
+            NSString *place_id = [result objectForKey:@"id"];
+            NSString *vicinity = [result objectForKey:@"vicinity"];
+            place.name = name;
+            place.reference = reference;
+            place.rating = rating;
+            place.ratingNum = [rating doubleValue];
+            place.price_level = price_level;
+            place.priceNum = [price_level doubleValue];
+            place.soundNum = (double)count;
+            place.icon = icon;
+            place.place_id = place_id;
+            place.vicinity = vicinity;
+            
+            for (NSDictionary *photos in [result objectForKey:@"photos"]) {
+                photo_ref = [photos objectForKey:@"photo_reference"];
+            }
+            
+            
+            NSDictionary *geo = [result objectForKey:@"geometry"];
+            NSDictionary *locs = [geo objectForKey:@"location"];
+            
+            
+            NSString *lat = [locs objectForKey:@"lat"];
+            NSString *lng = [locs objectForKey:@"lng"];
+            double latD = [lat doubleValue];
+            double longtD = [lng doubleValue];
+            CLLocation *locB = [[CLLocation alloc] initWithLatitude:latD longitude:longtD];
+            place.distanceNumMeters = [Utils distanceInMeters:locA To:locB];
+            
+            place.lattitude = lat;
+            place.longitude = lng;
+            
+            
+            place.reference_photo = photo_ref;
+            
+            //NSLog(@"name: %@", name);
+            [appDelegate.places addObject:place];
+            count++;
+        }
     }
     
     if (([appDelegate.places count] == 0) && (appDelegate.locationState == Defined)) {
