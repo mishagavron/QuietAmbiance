@@ -8,6 +8,8 @@
 
 #import "TopViewController.h"
 #import "AppDelegate.h"
+#import "OptionsViewController.h"
+
 
 @interface TopViewController ()
 
@@ -28,7 +30,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
+
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -42,12 +44,22 @@
     // Dispose of any resources that can be recreated.
 }
 
+/*
+- (void)backgroundThread {
+    
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    if (appDelegate.activityView == nil) appDelegate.activityView = [[ActivityViewController alloc] initWithNibName:@"ActivityViewController" bundle:nil];
+    [self presentViewController:appDelegate.activityView animated:TRUE completion:nil];
+    
+    //[self.navigationController pushViewController:appDelegate.activityView animated:YES];
+}
+*/
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    //AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
-    //UIViewController *destView = [self navigationController];
-    //UIViewController *destView = self;
+    
 
+    //AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     
     if ([segue.identifier isEqualToString:@"pushNearby"]) {
         
@@ -56,10 +68,8 @@
     } else if ([segue.identifier isEqualToString:@"pushCapture"]) {
          
     } else if ([segue.identifier isEqualToString:@"pushOptions"]) {
-        //[NSThread detachNewThreadSelector:@selector(threadStartAnimating:) toTarget:self withObject:nil];
-    
+        
     }
-    //NSLog(@"Activity indicator is activated %d", [appDelegate.spinner isAnimating]);
 }
 
 @end

@@ -17,6 +17,7 @@
 #import "AFHTTPClient.h"
 #include "AFImageRequestOperation.h"
 #include "ResultDetailsViewController.h"
+#include "ActivityViewController.h"
 
 @interface RecentListViewController ()
 
@@ -43,9 +44,21 @@
     
     self.rowHeight = 80.0;
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
-    [self loadPlaces];
-    [self.tableView reloadData];
-
+    ActivityViewController *avc = [[ActivityViewController alloc] initWithNibName:@"ActivityViewController" bundle:nil];
+    
+    [self.view addSubview:avc.view];
+    [self presentViewController:avc animated:NO completion:nil];
+    
+    dispatch_queue_t loadOptions = dispatch_queue_create("optionsLoader", NULL);
+    dispatch_async(loadOptions, ^{
+        [self loadPlaces];
+        [self.tableView reloadData];
+        
+        dispatch_async(dispatch_get_main_queue(), ^ {
+            //[appDelegate.activityView stopAnimating];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        });
+    });
 }
 
 - (void)loadPlaces {

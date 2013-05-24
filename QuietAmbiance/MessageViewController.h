@@ -17,7 +17,7 @@
 @property (strong) NSString* messageText;
 
 @property (weak) IBOutlet UILabel *messageLabel;
-@property (weak)IBOutlet UIButton *messageButton;
+@property (weak) IBOutlet UIButton *messageButton;
     
 
 @end

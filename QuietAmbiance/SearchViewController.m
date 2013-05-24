@@ -18,6 +18,7 @@
 #import "SSCheckBoxView.h"
 #import "AFImageRequestOperation.h" 
 #import "AFJSONRequestOperation.h"
+#import "ActivityViewController.h"
 
 @interface SearchViewController ()
 
@@ -49,12 +50,7 @@
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 
-- (void) checkBoxViewChangedState:(SSCheckBoxView *)cbv
-{
-    NSLog(@"checkBoxViewChangedState: %d", cbv.checked);
-    
-    
-}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -122,145 +118,161 @@
         //[searchBar setShowsCancelButton:inSearchMode animated:true];
         AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
 
+        ActivityViewController *avc = [[ActivityViewController alloc] initWithNibName:@"ActivityViewController" bundle:nil];
         
-        NSString *lat = [NSString stringWithFormat:@"%f", appDelegate.currentLocation.lattitude];
-        NSString *longt = [NSString stringWithFormat:@"%f", appDelegate.currentLocation.longitude];
-        NSString *gKey = [Utils getKey];
-        //NSString *radius = [Utils getTextSearchRadius];
-        //NSString *type = [Utils getSearchType];
+        [self.view addSubview:avc.view];
+        [self presentViewController:avc animated:NO completion:nil];
         
-        self.searchText = searchBar.text;
-        NSString *placeString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=%@&location=%@,%@&sensor=false&key=%@",self.searchText,lat,longt,gKey];
-        
-    
-        placeString = [appDelegate.userPreferences personilizeGoogleAPIURLString:placeString];
-        //placeString = [Utils personilizeGoogleAPIURLString:placeString];
-        NSLog(@"request string: %@",placeString);
-        
-        NSURL *placeURL = [NSURL URLWithString:placeString];
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        
-        [request setHTTPMethod:@"GET"];
-        [request setURL:placeURL];
-        //NSURLResponse* response;
-        //NSError* error = nil;
-        
-        NSError *error = [[NSError alloc] init];
-        NSHTTPURLResponse *responseCode = nil;
-        NSData *JSON;
-        JSON = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
-        
-        if([responseCode statusCode] != 200){
-            NSLog(@"Error getting %@, HTTP status code %i", placeString, [responseCode statusCode]);
-            return;
-        }
-        
-        NSDictionary *res =[NSJSONSerialization
-                            JSONObjectWithData:JSON
-                            options:NSJSONReadingMutableLeaves
-                            error:nil];
-        
-        [appDelegate.places removeAllObjects];
-        CLLocation *locA = [[CLLocation alloc] initWithLatitude:appDelegate.currentLocation.lattitude longitude:appDelegate.currentLocation.longitude];
-        
-        int count = 0;
-        [self.searchResults removeAllObjects];
-       
-        for(NSDictionary *result in [res objectForKey:@"results"])
-        {
-            //NSDictionary *location = [[result objectForKey:@"geometry"] objectForKey:@"location"];
-            Place *place = [[Place alloc] init];
-            NSString *name = [result objectForKey:@"name"];
-            NSString *photo_ref = @"";
-            
-            
-            NSString *reference = [result objectForKey:@"reference"];
-            NSString *rating = [result objectForKey:@"rating"];
-            NSString *price_level = [result objectForKey:@"price_level"];
-            NSString *icon = [result objectForKey:@"icon"];
-            NSString *place_id = [result objectForKey:@"id"];
-            NSString *vicinity = [result objectForKey:@"formatted_address"];
-            place.name = name;
-            place.reference = reference;
-            place.rating = rating;
-            place.ratingNum = [rating doubleValue];
-            place.price_level = price_level;
-            place.priceNum = [price_level doubleValue];
-            place.soundNum = (double)count;
-            place.icon = icon;
-            place.place_id = place_id;
-            place.vicinity = vicinity;
-            
-            for (NSDictionary *photos in [result objectForKey:@"photos"]) {
-                photo_ref = [photos objectForKey:@"photo_reference"];
-            }
-            
-            
-            NSDictionary *geo = [result objectForKey:@"geometry"];
-            NSDictionary *locs = [geo objectForKey:@"location"];
-            
-            
-            NSString *lat = [locs objectForKey:@"lat"];
-            NSString *lng = [locs objectForKey:@"lng"];
-            double latD = [lat doubleValue];
-            double longtD = [lng doubleValue];
-            CLLocation *locB = [[CLLocation alloc] initWithLatitude:latD longitude:longtD];
-            place.distanceNumMeters = [Utils distanceInMeters:locA To:locB];
-            
-            place.lattitude = lat;
-            place.longitude = lng;
-            
-            
-            place.reference_photo = photo_ref;
-            
-            //NSLog(@"name: %@", name);
-            [self.searchResults addObject:place];
-            count++;
-        }
-        if (([self.searchResults count] == 0) && (appDelegate.locationState == Defined)) {
-            
-            MessageViewController *msgc = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
-            [msgc setMessage:@"Sorry, nothing found."];
-            [self.navigationController setNavigationBarHidden:YES animated:YES];
-            [self.navigationController pushViewController:msgc animated:YES];
-            return;
-        }
-        
-        if ([self.searchResults count] > 0) {
-            self.sortControl.selectedSegmentIndex = appDelegate.userPreferences.sortOrder;
-            [self sortOrderChanged];
-        }
-        
-        //Save to Recent Search List
-        
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        
-        NSString *key = @"recentsearch";
-        
-        NSArray *oldrecentList = [defaults stringArrayForKey:key];
-        appDelegate.recentSearches = [[NSMutableArray alloc] initWithArray:oldrecentList];
-        
-        BOOL strFound = FALSE;
-        for (NSString *str in appDelegate.recentSearches) {
-            if ([str isEqualToString:self.searchText]) {
-                strFound = TRUE;
-            }
-        }
-        
-        if (strFound == FALSE) { [appDelegate.recentSearches addObject:self.searchText]; }
-        
-        if ([appDelegate.recentSearches count] > 12)
-        {
-            [appDelegate.recentSearches removeObjectAtIndex:0];
-        }
-        
-        NSArray *value = appDelegate.recentSearches;
-        
-        [defaults setObject:value forKey:key];
-        [defaults synchronize];
-        
-        [self.tableView reloadData];
+        dispatch_queue_t loadOptions = dispatch_queue_create("optionsLoader", NULL);
+        dispatch_async(loadOptions, ^{
 
+            NSString *lat = [NSString stringWithFormat:@"%f", appDelegate.currentLocation.lattitude];
+            NSString *longt = [NSString stringWithFormat:@"%f", appDelegate.currentLocation.longitude];
+            NSString *gKey = [Utils getKey];
+            //NSString *radius = [Utils getTextSearchRadius];
+            //NSString *type = [Utils getSearchType];
+            
+            self.searchText = searchBar.text;
+            NSString *placeString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=%@&location=%@,%@&sensor=false&key=%@",self.searchText,lat,longt,gKey];
+            
+            
+            placeString = [appDelegate.userPreferences personilizeGoogleAPIURLString:placeString];
+            //placeString = [Utils personilizeGoogleAPIURLString:placeString];
+            NSLog(@"request string: %@",placeString);
+            
+            NSURL *placeURL = [NSURL URLWithString:placeString];
+            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+            
+            [request setHTTPMethod:@"GET"];
+            [request setURL:placeURL];
+            //NSURLResponse* response;
+            //NSError* error = nil;
+            
+            NSError *error = [[NSError alloc] init];
+            NSHTTPURLResponse *responseCode = nil;
+            NSData *JSON;
+            JSON = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+            
+            if([responseCode statusCode] != 200){
+                NSLog(@"Error getting %@, HTTP status code %i", placeString, [responseCode statusCode]);
+                return;
+            }
+            
+            NSDictionary *res =[NSJSONSerialization
+                                JSONObjectWithData:JSON
+                                options:NSJSONReadingMutableLeaves
+                                error:nil];
+            
+            [appDelegate.places removeAllObjects];
+            CLLocation *locA = [[CLLocation alloc] initWithLatitude:appDelegate.currentLocation.lattitude longitude:appDelegate.currentLocation.longitude];
+            
+            int count = 0;
+            [self.searchResults removeAllObjects];
+            
+            for(NSDictionary *result in [res objectForKey:@"results"])
+            {
+                //NSDictionary *location = [[result objectForKey:@"geometry"] objectForKey:@"location"];
+                Place *place = [[Place alloc] init];
+                NSString *name = [result objectForKey:@"name"];
+                NSString *photo_ref = @"";
+                
+                
+                NSString *reference = [result objectForKey:@"reference"];
+                NSString *rating = [result objectForKey:@"rating"];
+                NSString *price_level = [result objectForKey:@"price_level"];
+                NSString *icon = [result objectForKey:@"icon"];
+                NSString *place_id = [result objectForKey:@"id"];
+                NSString *vicinity = [result objectForKey:@"formatted_address"];
+                place.name = name;
+                place.reference = reference;
+                place.rating = rating;
+                place.ratingNum = [rating doubleValue];
+                place.price_level = price_level;
+                place.priceNum = [price_level doubleValue];
+                place.soundNum = (double)count;
+                place.icon = icon;
+                place.place_id = place_id;
+                place.vicinity = vicinity;
+                
+                for (NSDictionary *photos in [result objectForKey:@"photos"]) {
+                    photo_ref = [photos objectForKey:@"photo_reference"];
+                }
+                
+                
+                NSDictionary *geo = [result objectForKey:@"geometry"];
+                NSDictionary *locs = [geo objectForKey:@"location"];
+                
+                
+                NSString *lat = [locs objectForKey:@"lat"];
+                NSString *lng = [locs objectForKey:@"lng"];
+                double latD = [lat doubleValue];
+                double longtD = [lng doubleValue];
+                CLLocation *locB = [[CLLocation alloc] initWithLatitude:latD longitude:longtD];
+                place.distanceNumMeters = [Utils distanceInMeters:locA To:locB];
+                
+                place.lattitude = lat;
+                place.longitude = lng;
+                
+                
+                place.reference_photo = photo_ref;
+                
+                //NSLog(@"name: %@", name);
+                [self.searchResults addObject:place];
+                count++;
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^ {
+                //[appDelegate.activityView stopAnimating];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            });
+            
+            if (([self.searchResults count] == 0) && (appDelegate.locationState == Defined)) {
+                
+                MessageViewController *msgc = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
+                [msgc setMessage:@"Sorry, nothing found."];
+                [self.navigationController setNavigationBarHidden:YES animated:YES];
+                [self.navigationController pushViewController:msgc animated:YES];
+                return;
+            }
+            
+            if ([self.searchResults count] > 0) {
+                self.sortControl.selectedSegmentIndex = appDelegate.userPreferences.sortOrder;
+                [self sortOrderChanged];
+            }
+            
+            //Save to Recent Search List
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            
+            NSString *key = @"recentsearch";
+            
+            NSArray *oldrecentList = [defaults stringArrayForKey:key];
+            appDelegate.recentSearches = [[NSMutableArray alloc] initWithArray:oldrecentList];
+            
+            BOOL strFound = FALSE;
+            for (NSString *str in appDelegate.recentSearches) {
+                if ([str isEqualToString:self.searchText]) {
+                    strFound = TRUE;
+                }
+            }
+            
+            if (strFound == FALSE) { [appDelegate.recentSearches addObject:self.searchText]; }
+            
+            if ([appDelegate.recentSearches count] > 12)
+            {
+                [appDelegate.recentSearches removeObjectAtIndex:0];
+            }
+            
+            NSArray *value = appDelegate.recentSearches;
+            
+            [defaults setObject:value forKey:key];
+            [defaults synchronize];
+            
+            
+            [self.tableView reloadData];
+
+
+        });
  	}
     
 	//[self filterContent:searchText];

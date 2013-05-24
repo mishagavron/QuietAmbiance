@@ -18,6 +18,7 @@
 #include "AFImageRequestOperation.h"
 #include "ResultDetailsViewController.h"
 #include "MessageViewController.h"
+#include "ActivityViewController.h"
 
 @interface NearbyListViewController ()
 
@@ -46,9 +47,24 @@
 
     //[NSThread sleepForTimeInterval:5.0];
     self.rowHeight = 80.0;
-    [self loadPlaces];
-    [self.tableView reloadData];
+    
+    ActivityViewController *avc = [[ActivityViewController alloc] initWithNibName:@"ActivityViewController" bundle:nil];
+    
+    [self.view addSubview:avc.view];
+    [self presentViewController:avc animated:NO completion:nil];
+    
+    dispatch_queue_t loadOptions = dispatch_queue_create("optionsLoader", NULL);
+    dispatch_async(loadOptions, ^{
 
+        //[NSThread sleepForTimeInterval:5.];
+        [self loadPlaces];
+        [self.tableView reloadData];
+        
+        dispatch_async(dispatch_get_main_queue(), ^ {
+            //[appDelegate.activityView stopAnimating];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        });
+    });
 }
 
 
@@ -67,13 +83,28 @@
 
 
 -(void) refreshTable:(UIRefreshControl *)refresh {
-    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
-    [appDelegate.places removeAllObjects];
-   
-    [self loadPlaces];
-    [self.tableView reloadData];
-    [self.refreshControl endRefreshing];
-
+  
+/*
+    ActivityViewController *avc = [[ActivityViewController alloc] initWithNibName:@"ActivityViewController" bundle:nil];
+    
+    [self.view addSubview:avc.view];
+    [self presentViewController:avc animated:NO completion:nil];
+    
+    dispatch_queue_t loadOptions = dispatch_queue_create("optionsLoader", NULL);
+    dispatch_async(loadOptions, ^{
+        AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+        [appDelegate.places removeAllObjects];
+*/
+        [self loadPlaces];
+        [self.tableView reloadData];
+        [self.refreshControl endRefreshing];
+/*
+        dispatch_async(dispatch_get_main_queue(), ^ {
+            //[appDelegate.activityView stopAnimating];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        });
+    });
+*/
 }
 
 - (void)loadPlaces {
