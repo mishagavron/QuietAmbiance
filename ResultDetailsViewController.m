@@ -95,7 +95,7 @@ static NSArray *dates = nil;
 	parentRect = CGRectMake(parentRect.origin.x,
 							(parentRect.origin.y + 145),
 							parentRect.size.width,
-							(parentRect.size.height - 260));
+							(parentRect.size.height - 350));
 	// 2 - Create host view
 	self.hostView = [(CPTGraphHostingView *) [CPTGraphHostingView alloc] initWithFrame:parentRect];
     self.hostView.allowPinchScaling = YES;
