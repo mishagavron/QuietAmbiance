@@ -119,7 +119,7 @@
         AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
 
         ActivityViewController *avc = [[ActivityViewController alloc] initWithNibName:@"ActivityViewController" bundle:nil];
-        
+        avc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         [self.view addSubview:avc.view];
         [self presentViewController:avc animated:NO completion:nil];
         

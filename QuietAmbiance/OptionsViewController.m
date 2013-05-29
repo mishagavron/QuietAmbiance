@@ -122,7 +122,7 @@
 	// Do any additional setup after loading the view.
     
     ActivityViewController *avc = [[ActivityViewController alloc] initWithNibName:@"ActivityViewController" bundle:nil];
-    
+    avc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self.view addSubview:avc.view];
     [self presentViewController:avc animated:NO completion:nil];
 

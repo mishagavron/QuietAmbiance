@@ -45,7 +45,7 @@
     self.rowHeight = 80.0;
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
     ActivityViewController *avc = [[ActivityViewController alloc] initWithNibName:@"ActivityViewController" bundle:nil];
-    
+    avc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self.view addSubview:avc.view];
     [self presentViewController:avc animated:NO completion:nil];
     
