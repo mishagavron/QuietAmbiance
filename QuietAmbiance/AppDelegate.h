@@ -11,6 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "Location.h"
 #import "UserPreferences.h"
+#import "ConnectionManager.h"
 
 typedef enum {
     
@@ -24,6 +25,8 @@ typedef enum {
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
+
+@property (strong, nonatomic) ConnectionManager *connectionManager;
 
 @property (strong, nonatomic) Location *currentLocation;
 

@@ -94,6 +94,9 @@
 		86C181BF172514BD0037389D /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C181991724B21F0037389D /* UIImageView+AFNetworking.m */; };
 		86C181E61725CE770037389D /* ResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C181E51725CE760037389D /* ResultCell.m */; };
 		86C181EA172646A10037389D /* quiet_zone.png in Resources */ = {isa = PBXBuildFile; fileRef = 86C181E9172646A10037389D /* quiet_zone.png */; };
+		86D977C91757B4800004CBFA /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 86D977C81757B4800004CBFA /* ConnectionManager.m */; };
+		86D977CC1757B6C30004CBFA /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 86D977CB1757B6C30004CBFA /* Reachability.m */; };
+		86D977CE1757BC7B0004CBFA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86D977CD1757BC7B0004CBFA /* SystemConfiguration.framework */; };
 		86DEC92A1736F8490014027D /* UserPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DEC9291736F8490014027D /* UserPreferences.m */; };
 		86DEC93317377FD10014027D /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DEC93217377FD00014027D /* SearchViewController.m */; };
 		86DEC936173780230014027D /* SoundCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DEC935173780230014027D /* SoundCaptureViewController.m */; };
@@ -243,6 +246,11 @@
 		86C181E41725CE760037389D /* ResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultCell.h; sourceTree = "<group>"; };
 		86C181E51725CE760037389D /* ResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultCell.m; sourceTree = "<group>"; };
 		86C181E9172646A10037389D /* quiet_zone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quiet_zone.png; sourceTree = "<group>"; };
+		86D977C71757B4800004CBFA /* ConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionManager.h; sourceTree = "<group>"; };
+		86D977C81757B4800004CBFA /* ConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionManager.m; sourceTree = "<group>"; };
+		86D977CA1757B6C30004CBFA /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		86D977CB1757B6C30004CBFA /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		86D977CD1757BC7B0004CBFA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		86DEC9281736F8490014027D /* UserPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPreferences.h; sourceTree = "<group>"; };
 		86DEC9291736F8490014027D /* UserPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPreferences.m; sourceTree = "<group>"; };
 		86DEC93117377FD00014027D /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
@@ -361,6 +369,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86D977CE1757BC7B0004CBFA /* SystemConfiguration.framework in Frameworks */,
 				8616EB9D1736BEA100F7CFD4 /* QuartzCore.framework in Frameworks */,
 				86A1F46E1732DFD60032B3A4 /* MapKit.framework in Frameworks */,
 				86C181AC172512F90037389D /* AVFoundation.framework in Frameworks */,
@@ -409,6 +418,7 @@
 		86C1813D1724A56B0037389D = {
 			isa = PBXGroup;
 			children = (
+				86D977CD1757BC7B0004CBFA /* SystemConfiguration.framework */,
 				B5B36F9717415AFE004B7CAE /* CorePlot */,
 				86AEB4F9173ED755009CE69D /* SSCheckBoxView */,
 				86C181861724B2060037389D /* AFNetworking */,
@@ -443,6 +453,8 @@
 		86C1814F1724A56B0037389D /* QuietAmbiance */ = {
 			isa = PBXGroup;
 			children = (
+				86D977CA1757B6C30004CBFA /* Reachability.h */,
+				86D977CB1757B6C30004CBFA /* Reachability.m */,
 				86DEC93117377FD00014027D /* SearchViewController.h */,
 				86DEC93217377FD00014027D /* SearchViewController.m */,
 				86377276173DA8C40064639D /* SearchCell.xib */,
@@ -491,6 +503,8 @@
 				86C181E51725CE760037389D /* ResultCell.m */,
 				86C1817E1724ACF40037389D /* ResultCell.xib */,
 				86178D13172B2F6400FF570D /* ResultDetailsViewController.xib */,
+				86D977C71757B4800004CBFA /* ConnectionManager.h */,
+				86D977C81757B4800004CBFA /* ConnectionManager.m */,
 				86FA090B17414D1A0097C027 /* TopViewController.h */,
 				86FA090C17414D1A0097C027 /* TopViewController.m */,
 				86986996174EE8AA004C603D /* AdvancedSearchViewController.h */,
@@ -842,6 +856,8 @@
 				86FA09101741C8BB0097C027 /* OptionsViewController.m in Sources */,
 				86986995174EBEB8004C603D /* ActivityViewController.m in Sources */,
 				86986998174EE8AA004C603D /* AdvancedSearchViewController.m in Sources */,
+				86D977C91757B4800004CBFA /* ConnectionManager.m in Sources */,
+				86D977CC1757B6C30004CBFA /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

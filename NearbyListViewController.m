@@ -127,6 +127,16 @@
         return;
         
     }
+
+    if (appDelegate.connectionManager.internetActive == NO) {
+        MessageViewController *msgc = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
+        [msgc setMessage:@"Internet Connection is Lost."];
+        //[msgc.navigationController setNavigationBarHidden:YES animated:YES];
+        //[self.navigationController setNavigationBarHidden:YES animated:YES];
+        [self.navigationController pushViewController:msgc animated:YES];
+        return;
+    }
+
     CLLocation *currentLocation=appDelegate.locationManager.location;
     
     if ([appDelegate.places count] == 0) {  // reload from API only when necessary

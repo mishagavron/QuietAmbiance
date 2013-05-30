@@ -93,6 +93,15 @@
         appDelegate.places = [[NSMutableArray alloc] init];
     }
     
+    if (appDelegate.connectionManager.internetActive == NO) {
+        MessageViewController *msgc = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
+        [msgc setMessage:@"Internet Connection is Lost."];
+        //[msgc.navigationController setNavigationBarHidden:YES animated:YES];
+        //[self.navigationController setNavigationBarHidden:YES animated:YES];
+        [self.navigationController pushViewController:msgc animated:YES];
+        return;
+    }
+
     if (appDelegate.locationState == Undefined) {
         
         MessageViewController *msgc = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];

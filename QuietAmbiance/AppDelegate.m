@@ -19,7 +19,7 @@
 
 @implementation AppDelegate
 
-@synthesize locationManager=_locationManager, places, recentPlaces, recentSearches, userPreferences;
+@synthesize locationManager=_locationManager, places, recentPlaces, recentSearches, userPreferences, connectionManager;
 
 -(void) loadLocaleFromAPI:(CLLocation *)location {
     
@@ -109,6 +109,10 @@
 {
     // Override point for customization after application launch.
     
+    if (self.connectionManager == nil) {
+        self.connectionManager = [ConnectionManager alloc];
+        [self.connectionManager init];
+    }
     //If object has not been created, create it.
     if(self.locationManager==nil){
         _locationManager=[[CLLocationManager alloc] init];

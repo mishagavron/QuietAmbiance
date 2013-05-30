@@ -111,12 +111,22 @@
 {
 	[searchBar resignFirstResponder];
     
+
     if (![self.searchText isEqualToString:searchBar.text]){
         
         // We're still 'in edit mode', if the user left a keyword in the searchBar
         //inSearchMode = (searchText != nil && [searchText length] > 0);
         //[searchBar setShowsCancelButton:inSearchMode animated:true];
         AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+        
+        if (appDelegate.connectionManager.internetActive == NO) {
+            MessageViewController *msgc = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
+            [msgc setMessage:@"Internet Connection is Lost."];
+            //[msgc.navigationController setNavigationBarHidden:YES animated:YES];
+            //[self.navigationController setNavigationBarHidden:YES animated:YES];
+            [self.navigationController pushViewController:msgc animated:YES];
+            return;
+        }
 
         ActivityViewController *avc = [[ActivityViewController alloc] initWithNibName:@"ActivityViewController" bundle:nil];
         avc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
