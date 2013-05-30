@@ -53,8 +53,8 @@
     [self.view addSubview:avc.view];
     [self presentViewController:avc animated:NO completion:nil];
     
-    dispatch_queue_t loadOptions = dispatch_queue_create("optionsLoader", NULL);
-    dispatch_async(loadOptions, ^{
+    dispatch_queue_t loadNearby = dispatch_queue_create("nearbyLoader", NULL);
+    dispatch_async(loadNearby, ^{
 
         //[NSThread sleepForTimeInterval:5.];
         [self loadPlaces];

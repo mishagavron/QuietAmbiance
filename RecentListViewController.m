@@ -49,8 +49,8 @@
     [self.view addSubview:avc.view];
     [self presentViewController:avc animated:NO completion:nil];
     
-    dispatch_queue_t loadOptions = dispatch_queue_create("optionsLoader", NULL);
-    dispatch_async(loadOptions, ^{
+    dispatch_queue_t loadRecent = dispatch_queue_create("recentLoader", NULL);
+    dispatch_async(loadRecent, ^{
         [self loadPlaces];
         [self.tableView reloadData];
         

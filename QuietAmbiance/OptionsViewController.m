@@ -121,13 +121,13 @@
         
 	// Do any additional setup after loading the view.
     
-    ActivityViewController *avc = [[ActivityViewController alloc] initWithNibName:@"ActivityViewController" bundle:nil];
-    avc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self.view addSubview:avc.view];
-    [self presentViewController:avc animated:NO completion:nil];
+    //ActivityViewController *avc = [[ActivityViewController alloc] initWithNibName:@"ActivityViewController" bundle:nil];
+    //avc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    //[self.view addSubview:avc.view];
+    //[self presentViewController:avc animated:NO completion:nil];
 
-    dispatch_queue_t loadOptions = dispatch_queue_create("optionsLoader", NULL);
-    dispatch_async(loadOptions, ^{
+    //dispatch_queue_t loadOptions = dispatch_queue_create("optionsLoader", NULL);
+    //dispatch_async(loadOptions, ^{
         
         //[NSThread sleepForTimeInterval:5.];
         
@@ -218,7 +218,7 @@
         
         [self.cbCafes setStateChangedTarget:self selector:@selector(checkBoxCafesChangedState:)];
         [self.view addSubview:self.cbCafes];
-        
+       
         //type Bars
         frame = CGRectMake(105, 332, 21, 21);
         if (appDelegate.userPreferences.searchTypeBar) {
@@ -234,12 +234,14 @@
         [self.view addSubview:self.cbBars];
         
     
-        dispatch_async(dispatch_get_main_queue(), ^ {
+//        dispatch_async(dispatch_get_main_queue(), ^ {
             //[appDelegate.activityView stopAnimating];
-            [self dismissViewControllerAnimated:YES completion:nil];
-        });
-    });
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+//            [self dismissViewControllerAnimated:YES completion:nil];
+            
+//        });
+//    });
+
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

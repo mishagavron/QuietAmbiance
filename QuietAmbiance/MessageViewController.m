@@ -42,6 +42,12 @@
     self.messageText = message;
 }
 
+- (void) viewWillAppear:(BOOL)flag {
+    
+    [super viewWillAppear:flag];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
 - (IBAction) dismiss:(id) sender {
     // Dismiss the view
     [self.view setHidden:YES];

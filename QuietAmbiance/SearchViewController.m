@@ -120,11 +120,12 @@
 
         ActivityViewController *avc = [[ActivityViewController alloc] initWithNibName:@"ActivityViewController" bundle:nil];
         avc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        
         [self.view addSubview:avc.view];
         [self presentViewController:avc animated:NO completion:nil];
         
-        dispatch_queue_t loadOptions = dispatch_queue_create("optionsLoader", NULL);
-        dispatch_async(loadOptions, ^{
+        dispatch_queue_t loadSearch = dispatch_queue_create("searchLoader", NULL);
+        dispatch_async(loadSearch, ^{
 
             NSString *lat = [NSString stringWithFormat:@"%f", appDelegate.currentLocation.lattitude];
             NSString *longt = [NSString stringWithFormat:@"%f", appDelegate.currentLocation.longitude];
@@ -230,7 +231,8 @@
                 
                 MessageViewController *msgc = [[MessageViewController alloc] initWithNibName:@"MessageViewController" bundle:nil];
                 [msgc setMessage:@"Sorry, nothing found."];
-                [self.navigationController setNavigationBarHidden:YES animated:YES];
+                //[msgc.navigationController setNavigationBarHidden:YES animated:YES];
+                //[self.navigationController setNavigationBarHidden:YES animated:YES];
                 [self.navigationController pushViewController:msgc animated:YES];
                 return;
             }
