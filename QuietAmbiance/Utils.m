@@ -193,34 +193,34 @@ static NSString *googleKey = @"AIzaSyC3G9bERz7ktJkqxvnnRx_Sb9ld8jKQErk";
     
     UIImage *img = [[UIImage alloc] init];
     
-    if (rating < -70.00) {
+    if (rating < 20.00) {
         img = [UIImage imageNamed:@"quiet_5.png"];
     }
-    else if (rating >= -70.00 && rating < -65.00) {
+    else if (rating >= 20.00 && rating < 45.00) {
         img = [UIImage imageNamed:@"quiet_4.png"];
     }
-    else if (rating >= -65.00 && rating < -60.00) {
+    else if (rating >= 30.00 && rating < 50.00) {
         img = [UIImage imageNamed:@"quiet_3.png"];
     }
-    else if (rating >= -60.00 && rating < -55.00) {
+    else if (rating >= 40.00 && rating < 55.00) {
         img = [UIImage imageNamed:@"quiet_2.png"];
     }
-    else if (rating >= -55.00 && rating < -50.00) {
+    else if (rating >= 50.00 && rating < 65.00) {
         img = [UIImage imageNamed:@"quiet_1.png"];
     }
-    else if (rating >= -50.00 && rating < -45.00) {
+    else if (rating >= 60.00 && rating < 70.00) {
         img = [UIImage imageNamed:@"loud_1.png"];
     }
-    else if (rating >= -45.00 && rating < -40.00) {
+    else if (rating >= 70.00 && rating < 75.00) {
         img = [UIImage imageNamed:@"loud_2.png"];
     }
-    else if (rating >= -40.00 && rating < -35.00) {
+    else if (rating >= 80.00 && rating < 85.00) {
         img = [UIImage imageNamed:@"loud_3.png"];
     }
-    else if (rating >= -35.00 && rating < 1) {
+    else if (rating >= 85.00 && rating < 90.00) {
         img = [UIImage imageNamed:@"loud_4.png"];
     }
-    else if (rating > 1) {
+    else if (rating >= 90) {
         img = [UIImage imageNamed:@"loud_5.png"];
     }
     

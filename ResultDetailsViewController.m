@@ -95,7 +95,7 @@ static NSArray *dates = nil;
 	parentRect = CGRectMake(parentRect.origin.x,
 							(parentRect.origin.y + 145),
 							parentRect.size.width,
-							(parentRect.size.height - 260));
+							(parentRect.size.height - 350));
 	// 2 - Create host view
 	self.hostView = [(CPTGraphHostingView *) [CPTGraphHostingView alloc] initWithFrame:parentRect];
     self.hostView.allowPinchScaling = YES;
@@ -233,8 +233,8 @@ static NSArray *dates = nil;
 	y.minorTickLength = 2.0f;
 	y.tickDirection = CPTSignPositive;
     y.minorTickLineStyle = nil;
-	NSInteger majorIncrement = 100;
-	NSInteger minorIncrement = 50;
+	NSInteger majorIncrement = 10;
+	NSInteger minorIncrement = 5;
 	CGFloat yMax = 700.0f;  // should determine dynamically based on max price
 	NSMutableSet *yLabels = [NSMutableSet set];
 	NSMutableSet *yMajorLocations = [NSMutableSet set];
