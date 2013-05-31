@@ -41,7 +41,7 @@
 
     [super viewDidLoad];
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultCell" bundle:nil] forCellReuseIdentifier:@"ResultCell"];
-    //AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
     //UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshTable:) forControlEvents:UIControlEventValueChanged];
 
@@ -52,7 +52,7 @@
     avc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self.view addSubview:avc.view];
     [self presentViewController:avc animated:NO completion:nil];
-    
+    self.sortControl.selectedSegmentIndex = appDelegate.userPreferences.sortOrder;
     dispatch_queue_t loadNearby = dispatch_queue_create("nearbyLoader", NULL);
     dispatch_async(loadNearby, ^{
 
@@ -243,7 +243,7 @@
     }
     
     if ([appDelegate.places count] > 0) {
-        self.sortControl.selectedSegmentIndex = appDelegate.userPreferences.sortOrder;
+        
         [self sortOrderChanged];
     }
 

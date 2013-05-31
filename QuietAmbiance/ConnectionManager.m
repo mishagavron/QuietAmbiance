@@ -28,6 +28,8 @@
     hostReachable = [Reachability reachabilityWithHostName:@"www.google.com"];
     [hostReachable startNotifier];
     
+    self.alertShowing = NO;
+    
     return self;
 }
 
