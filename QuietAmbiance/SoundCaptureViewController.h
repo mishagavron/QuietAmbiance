@@ -16,6 +16,7 @@
     double avgSound;
     
     UIActivityIndicatorView *spinner;
+    UIImageView *activityImageView;
 }
 
 - (void)levelTimerCallback:(NSTimer *)timer;

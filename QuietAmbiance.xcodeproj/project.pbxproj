@@ -13,6 +13,8 @@
 		86178D0F1729A6CD00FF570D /* PlaceDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 86178D0E1729A6CC00FF570D /* PlaceDetails.m */; };
 		86178D121729AF3600FF570D /* Review.m in Sources */ = {isa = PBXBuildFile; fileRef = 86178D111729AF3600FF570D /* Review.m */; };
 		86178D14172B2F6400FF570D /* ResultDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86178D13172B2F6400FF570D /* ResultDetailsViewController.xib */; };
+		8637478B17619D5C0075371C /* Noise_Yellow_Ball.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8637478A17619D5C0075371C /* Noise_Yellow_Ball.gif */; };
+		8637478E176267610075371C /* AnimatedGif.m in Sources */ = {isa = PBXBuildFile; fileRef = 8637478D176267610075371C /* AnimatedGif.m */; };
 		86377272173DA8AD0064639D /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86377270173DA8AD0064639D /* MessageViewController.m */; };
 		86377273173DA8AD0064639D /* MessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86377271173DA8AD0064639D /* MessageViewController.xib */; };
 		86377277173DA8C40064639D /* SearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 86377275173DA8C40064639D /* SearchCell.m */; };
@@ -136,6 +138,9 @@
 		86178D101729AF3600FF570D /* Review.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Review.h; sourceTree = "<group>"; };
 		86178D111729AF3600FF570D /* Review.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Review.m; sourceTree = "<group>"; };
 		86178D13172B2F6400FF570D /* ResultDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResultDetailsViewController.xib; sourceTree = "<group>"; };
+		8637478A17619D5C0075371C /* Noise_Yellow_Ball.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Noise_Yellow_Ball.gif; sourceTree = "<group>"; };
+		8637478C176267610075371C /* AnimatedGif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedGif.h; sourceTree = "<group>"; };
+		8637478D176267610075371C /* AnimatedGif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedGif.m; sourceTree = "<group>"; };
 		8637726F173DA8AD0064639D /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
 		86377270173DA8AD0064639D /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
 		86377271173DA8AD0064639D /* MessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewController.xib; sourceTree = "<group>"; };
@@ -511,6 +516,8 @@
 				86986997174EE8AA004C603D /* AdvancedSearchViewController.m */,
 				86C181611724A56B0037389D /* MainStoryboard_iPhone.storyboard */,
 				86C181641724A56B0037389D /* MainStoryboard_iPad.storyboard */,
+				8637478C176267610075371C /* AnimatedGif.h */,
+				8637478D176267610075371C /* AnimatedGif.m */,
 				86C181501724A56B0037389D /* Supporting Files */,
 			);
 			path = QuietAmbiance;
@@ -519,6 +526,7 @@
 		86C181501724A56B0037389D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8637478A17619D5C0075371C /* Noise_Yellow_Ball.gif */,
 				B58D8E1D173D668500976852 /* Ambiance_Logo.png */,
 				B58D8E1B173D666F00976852 /* LocationImage.png */,
 				B58D8E19173D664A00976852 /* Ambiance_Logo_V1.png */,
@@ -812,6 +820,7 @@
 				86AEB529173EE001009CE69D /* cb_dark_off.png in Resources */,
 				86AEB52B1740915A009CE69D /* SearchPhraseCell.xib in Resources */,
 				86986989174AAC52004C603D /* ActivityViewController.xib in Resources */,
+				8637478B17619D5C0075371C /* Noise_Yellow_Ball.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -858,6 +867,7 @@
 				86986998174EE8AA004C603D /* AdvancedSearchViewController.m in Sources */,
 				86D977C91757B4800004CBFA /* ConnectionManager.m in Sources */,
 				86D977CC1757B6C30004CBFA /* Reachability.m in Sources */,
+				8637478E176267610075371C /* AnimatedGif.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

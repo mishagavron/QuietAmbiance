@@ -18,6 +18,7 @@
 #include "AFImageRequestOperation.h"
 #include "ResultDetailsViewController.h"
 #include "MessageViewController.h"
+#include "AnimatedGif.h"
 
 @interface SoundCaptureViewController ()
 
@@ -390,15 +391,39 @@
   		recorder.meteringEnabled = YES;
   		[recorder record];
         
-        spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        //spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        //Create the first status image and the indicator view
         
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        cell.accessoryView = spinner;
-        [spinner startAnimating];
+        UIImage *statusImage = [UIImage imageNamed:@"Noise_Yellow_Ball.gif"];
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Noise_Yellow_Ball" ofType:@"gif"];
+        activityImageView = 	[AnimatedGif getAnimationForGifFromFile:filePath];
+        
+        //Position the activity image view somewhere in
+        //the middle of your current view
+        activityImageView.frame = CGRectMake(
+                                             self.view.frame.size.width/2
+                                             -statusImage.size.width/2,
+                                             self.view.frame.size.height/2
+                                             -statusImage.size.height/2,
+                                             statusImage.size.width,
+                                             statusImage.size.height);
+        
+
+        //activityImageView.layer.opacity = 0.8;
+        [self.view addSubview:activityImageView];
+        self.view.userInteractionEnabled = NO;
+        
+        //Start the animation
+        [activityImageView startAnimating];
+        
+        
+        //UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        //cell.accessoryView = spinner;
+        //[spinner startAnimating];
         
         levelTimer = [NSTimer scheduledTimerWithTimeInterval: 0.03 target: self selector: @selector(levelTimerCallback:) userInfo: nil repeats: YES];
         
-        [NSTimer scheduledTimerWithTimeInterval:5 target: self selector: @selector(stopSampling:) userInfo:p.place_id repeats: NO];
+        [NSTimer scheduledTimerWithTimeInterval:5.7 target: self selector: @selector(stopSampling:) userInfo:p.place_id repeats: NO];
         
   	} else
   		NSLog([error description]);
@@ -445,7 +470,10 @@
     //call start on your request operation
     [operation start];
     
-    [spinner stopAnimating];
+    //[spinner stopAnimating];
+    [activityImageView stopAnimating];
+    self.view.userInteractionEnabled = YES;
+    activityImageView.hidden = YES;
     
     [self.tableView reloadData];
     
